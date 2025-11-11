@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <link rel="icon" type="image/png" href="/images/logo.png">
+  <link rel="icon" type="image/png" href="./images/logo.png">
   <title>play it twice — главная</title>
-  <link rel="stylesheet" href="/styles/styles.css">
+  <link rel="stylesheet" href="./styles/styles.css">
 </head>
 <body>
 
@@ -13,7 +13,7 @@
     <!-- Шапка -->
     <header class="header">
       <div class="logo">
-        <img src="/images/logo.png" alt="Логотип сайта" />
+        <img src="./images/logo.png" alt="Логотип сайта" />
       </div>
       <div class="branding">
         <span class="brand-name">play it twice</span>
@@ -232,16 +232,16 @@
       sidebarButtons.forEach(button => {
         button.addEventListener('click', function() {
           if (this.textContent === 'Главная') {
-            window.location.href = '../index.html';
+            window.location.href = './index.html';
           }
           if (this.textContent === 'Новинки') {
-            window.location.href = '../pages/new_albums.html';
+            window.location.href = './pages/new_albums.html';
           }
           if (this.textContent === 'Артисты') {
-            window.location.href = '../pages/artists.html';
+            window.location.href = './pages/artists.html';
           }
           if (this.textContent === 'Добавить трек') {
-            window.location.href = '../pages/add_track.html';
+            window.location.href = './pages/add_track.html';
           }
         });
       });
