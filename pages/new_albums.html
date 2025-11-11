@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="icon" type="image/png" href="/images/logo.png">
+  <title>play it twice — новинки</title>
+  <link rel="stylesheet" href="/styles/styles.css">
+  <link rel="stylesheet" href="/styles/new_albums.css">
+
+</head>
+<body>
+
+  <div class="wrapper">
+    <!-- Шапка -->
+    <header class="header">
+      <div class="logo">
+        <img src="/images/logo.png" alt="Логотип сайта" />
+      </div>
+      <div class="branding">
+        <span class="brand-name">play it twice</span>
+        <span class="brand-tag">музыкальный<br>сервис</span>
+      </div>
+      <button class="search-btn" type="button">поиск по каталогу</button>
+    </header>
+    
+    <!-- Основной блок -->
+    <main class="main">
+      <!-- Сайдбар -->
+      <nav class="sidebar" aria-label="Основное меню">
+        <button class="sb-btn" type="button">Главная</button>
+        <button class="sb-btn" type="button" aria-current="page">Новинки</button>
+        <button class="sb-btn" type="button">Артисты</button>
+        <button class="sb-btn" type="button">Добавить трек</button>
+      </nav>
+
+      <!-- Контент новинок -->
+      <section class="card" aria-labelledby="newReleasesTitle">
+        <div class="section-title">
+          <h2 id="newReleasesTitle" class="accent">НОВИНКИ <span class="new-badge">NEW</span></h2>
+          <a href="#" class="view-all">Смотреть все →</a>
+        </div>
+
+        <div class="filters" role="toolbar" aria-label="Фильтры новинок">
+          <button class="pill active" type="button">Все</button>
+          <button class="pill" type="button">Треки</button>
+          <button class="pill" type="button">Альбомы</button>
+          <button class="pill" type="button">За неделю</button>
+          <button class="pill" type="button">За месяц</button>
+        </div>
+
+        <div class="new-releases">
+          <div class="release-card" data-track="1">
+            <img src="/images/mood-chill.jpg" alt="Обложка альбома" class="release-cover">
+            <div class="release-title">Весенний дождь</div>
+            <div class="release-artist">Анна Петрова</div>
+            <div class="release-date">Сегодня</div>
+          </div>
+          
+          <!-- Новинка 2 -->
+          <div class="release-card" data-track="2">
+            <img src="/images/mood-dance.jpg" alt="Обложка альбома" class="release-cover">
+            <div class="release-title">Городские огни</div>
+            <div class="release-artist">Электронные призраки</div>
+            <div class="release-date">Вчера</div>
+          </div>
+          
+          <!-- Новинка 3 -->
+          <div class="release-card" data-track="3">
+            <img src="/images/mood-top10.jpg" alt="Обложка альбома" class="release-cover">
+            <div class="release-title">Лунная соната</div>
+            <div class="release-artist">Сергей Орлов</div>
+            <div class="release-date">2 дня назад</div>
+          </div>
+          
+          <!-- Новинка 4 -->
+          <div class="release-card" data-track="4">
+            <img src="/images/mood-techno.jpg" alt="Обложка альбома" class="release-cover">
+            <div class="release-title">Океан внутри</div>
+            <div class="release-artist">Марина Синяя</div>
+            <div class="release-date">3 дня назад</div>
+          </div>
+          
+          <!-- Новинка 5 -->
+          <div class="release-card" data-track="5">
+            <img src="/images/mood-walk.jpg" alt="Обложка альбома" class="release-cover">
+            <div class="release-title">Бесконечное лето</div>
+            <div class="release-artist">Солнечные люди</div>
+            <div class="release-date">4 дня назад</div>
+          </div>
+          
+          <!-- Новинка 6 -->
+          <div class="release-card" data-track="6">
+            <img src="/images/mood-top100.jpg" alt="Обложка альбома" class="release-cover">
+            <div class="release-title">Тишина между слов</div>
+            <div class="release-artist">Алексей Воронов</div>
+            <div class="release-date">5 дней назад</div>
+          </div>
+          
+          <!-- Новинка 7 -->
+          <div class="release-card" data-track="7">
+            <img src="/images/mood-top25.jpg" alt="Обложка альбома" class="release-cover">
+            <div class="release-title">Улицы без имен</div>
+            <div class="release-artist">Городской джаз</div>
+            <div class="release-date">6 дней назад</div>
+          </div>
+          
+          <!-- Новинка 8 -->
+          <div class="release-card" data-track="8">
+            <img src="/images/mood-rap.jpg" alt="Обложка альбома" class="release-cover">
+            <div class="release-title">Последний поезд</div>
+            <div class="release-artist">Ночные голоса</div>
+            <div class="release-date">Неделю назад</div>
+          </div>
+        </div>
+
+        <!-- Популярные новинки -->
+        <div class="section-title" style="margin-top: 40px;">
+          <h3 class="accent">ПОПУЛЯРНЫЕ НОВИНКИ</h3>
+          <a href="#" class="view-all">Смотреть все →</a>
+        </div>
+
+        <div class="new-releases">
+          <!-- Популярная новинка 1 -->
+          <div class="release-card" data-track="9">
+            <img src="/images/semeinoe_photo_zoya_yachenko.jpg" alt="Обложка альбома" class="release-cover">
+            <div class="release-title">Семейное фото</div>
+            <div class="release-artist">Зоя Ященко, Белая Гвардия</div>
+          </div>
+          
+          <!-- Популярная новинка 2 -->
+          <div class="release-card" data-track="10">
+            <img src="/images/semeinoe_photo_zoya_yachenko.jpg" alt="Обложка альбома" class="release-cover">
+            <div class="release-title">Венеция</div>
+            <div class="release-artist">Белая Гвардия</div>
+          </div>
+          
+          <!-- Популярная новинка 3 -->
+          <div class="release-card" data-track="11">
+            <img src="/images/schastliviy_chelovek.jpg" alt="Обложка альбома" class="release-cover">
+            <div class="release-title">Счастливый человек</div>
+            <div class="release-artist">Кис-кис</div>
+          </div>
+          
+          <!-- Популярная новинка 4 -->
+          <div class="release-card" data-track="12">
+            <img src="/images/schastliviy_chelovek.jpg" alt="Обложка альбома" class="release-cover">
+            <div class="release-title">Спасибо</div>
+            <div class="release-artist">Кис-кис</div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Плеер -->
+    <section class="player" aria-label="Мини-плеер" id="miniPlayer">
+      <div class="cover">
+        <img src="/images/semeinoe_photo_zoya_yachenko.jpg" alt="Обложка трека">
+      </div>
+      <div class="track-info">
+        <div class="track-title">Семейное фото</div>
+        <div class="track-meta">Зоя Ященко, Белая Гвардия · Венеция</div>
+        <div class="progress">
+          <div class="progress-bar" style="width: 35%;"></div>
+        </div>
+      </div>
+      <div class="time">
+        00:00
+        <small>00:00</small>
+      </div>
+      <button class="action" type="button">Работа с треком</button>
+    </section>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const miniPlayer = document.getElementById('miniPlayer');
+      const releaseCards = document.querySelectorAll('.release-card');
+      const filterPills = document.querySelectorAll('.filters .pill');
+      
+      // Обработчик клика на плеер
+      miniPlayer.addEventListener('click', function(e) {
+        if (!e.target.closest('.action')) {
+          openTrackCard();
+        }
+      });
+      
+      // Обработчик клика на кнопку "Работа с треком"
+      const actionButton = miniPlayer.querySelector('.action');
+      actionButton.addEventListener('click', function(e) {
+        e.stopPropagation(); 
+        console.log('Работа с треком');
+      });
+      
+      // Обработчик клика на карточки новинок
+      releaseCards.forEach(card => {
+        card.addEventListener('click', function() {
+          const trackId = this.getAttribute('data-track');
+          openTrackCard(trackId);
+        });
+      });
+      
+      // Обработчик фильтров
+      filterPills.forEach(pill => {
+        pill.addEventListener('click', function() {
+          filterPills.forEach(p => p.classList.remove('active'));
+          this.classList.add('active');
+          // Здесь можно добавить логику фильтрации
+          console.log('Фильтр изменен:', this.textContent);
+        });
+      });
+      
+      // Обработчик кнопок сайдбара
+      const sidebarButtons = document.querySelectorAll('.sb-btn');
+      sidebarButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          if (this.textContent === 'Главная') {
+            window.location.href = '../index.html';
+          }
+          if (this.textContent === 'Новинки') {
+            window.location.href = '../pages/new_albums.html';
+          }
+          if (this.textContent === 'Артисты') {
+            window.location.href = '../pages/artists.html';
+          }
+          if (this.textContent === 'Добавить трек') {
+            window.location.href = '../pages/add_track.html';
+          }
+        });
+      });
+      
+      function openTrackCard(trackId = null) {
+        const url = trackId ? `pages/track-card.html?track=${trackId}` : 'track-card.html';
+        window.location.href = url;
+      }
+    });
+  </script>
+
+</body>
+</html>

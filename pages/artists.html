@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <link rel="icon" type="image/png" href="/images/logo.png">
+        <title>play it twice — артисты</title>
+        <link rel="stylesheet" href="/styles/styles.css">
+        <link rel="stylesheet" href="/styles/artists.css">
+
+    </head>
+    <body>  
+        <div class="wrapper">
+        <!-- Шапка -->
+        <header class="header">
+            <div class="logo">
+            <img src="/images/logo.png" alt="Логотип сайта" />
+            </div>
+            <div class="branding">
+            <span class="brand-name">play it twice</span>
+            <span class="brand-tag">музыкальный<br>сервис</span>
+            </div>
+            <button class="search-btn" type="button">поиск по каталогу</button>
+        </header>
+
+        <!-- Основной блок -->
+        <main class="main">
+            <!-- Сайдбар -->
+            <nav class="sidebar" aria-label="Основное меню">
+            <button class="sb-btn" type="button">Главная</button>
+            <button class="sb-btn" type="button">Новинки</button>
+            <button class="sb-btn" type="button" aria-current="page">Артисты</button>
+            <button class="sb-btn" type="button">Добавить трек</button>
+            </nav>
+
+            <!-- Контент артистов -->
+            <section class="card" aria-labelledby="artistsTitle">
+                <div class="section-title">
+                    <h2 id="artistsTitle" class="accent">АРТИСТЫ</h2>
+                    <a href="#" class="view-all">Все артисты →</a>
+                </div>
+                
+                <div class="filters" role="toolbar" aria-label="Фильтры артистов">
+                    <button class="pill active" type="button">Все</button>
+                    <button class="pill" type="button">Популярные</button>
+                    <button class="pill" type="button">Новые</button>
+                    <button class="pill" type="button">Локальные</button>
+                </div>
+
+                <div class="alphabet-filter">
+                    <button class="letter-btn active">Все</button>
+                    <button class="letter-btn">A</button>
+                    <button class="letter-btn">Б</button>
+                    <button class="letter-btn">В</button>
+                    <button class="letter-btn">Г</button>
+                    <button class="letter-btn">Д</button>
+                    <button class="letter-btn">Е</button>
+                    <button class="letter-btn">З</button>
+                    <button class="letter-btn">И</button>
+                    <button class="letter-btn">К</button>
+                    <button class="letter-btn">Л</button>
+                    <button class="letter-btn">М</button>
+                    <button class="letter-btn">Н</button>
+                    <button class="letter-btn">О</button>
+                    <button class="letter-btn">П</button>
+                    <button class="letter-btn">Р</button>
+                    <button class="letter-btn">С</button>
+                    <button class="letter-btn">Т</button>
+                    <button class="letter-btn">У</button>
+                    <button class="letter-btn">Ф</button>
+                    <button class="letter-btn">Э</button>
+                </div>
+
+                <div class="artists-grid">
+                    <div class="artist-card" data-artist="1">
+                        <img src="/images/maksim_trudniy_vozrast.jpg" alt="Обложка альбома Трудный возраст" class="artist-avatar">
+                        <div class="artist-name">МакSим</div>
+                        <div class="artist-genre">Поп, Европоп</div>
+                        <div class="artist-stats">45 треков · 95.8K прослушиваний</div>
+                    </div>
+
+                    <div class="artist-card" data-artist="2">
+                        <img src="/images/glyukoza_moskva.jpg" alt="Обложка альбома Москва" class="artist-avatar">
+                        <div class="artist-name">Глюк'oZa</div>
+                        <div class="artist-genre">Поп, Электроника</div>
+                        <div class="artist-stats">38 треков · 82.1K прослушиваний</div>
+                    </div>
+
+                    <div class="artist-card" data-artist="3">
+                        <img src="/images/bi2_bi2.jpg" alt="Обложка альбома Би-2 (2000)" class="artist-avatar">
+                        <div class="artist-name">Би-2</div>
+                        <div class="artist-genre">Рок, Альтернатива</div>
+                        <div class="artist-stats">150 треков · 185.3K прослушиваний</div>
+                    </div>
+
+                    <div class="artist-card" data-artist="4">
+                        <img src="/images/zemfira_14_nedel_tishiny.jpg" alt="Обложка альбома Четырнадцать недель тишины" class="artist-avatar">
+                        <div class="artist-name">Zемфира</div>
+                        <div class="artist-genre">Рок, Поп-рок</div>
+                        <div class="artist-stats">98 треков · 162.9K прослушиваний</div>
+                    </div>
+                </div>
+
+                <div class="artists-grid">
+                    <div class="artist-card" data-artist="5">
+                        <img src="/images/discoteka_avarija_chetvero.jpg" alt="Обложка альбома Четверо парней" class="artist-avatar">
+                        <div class="artist-name">Дискотека Авария</div>
+                        <div class="artist-genre">Дэнс-поп, Евроденс</div>
+                        <div class="artist-stats">62 трека · 110.5K прослушиваний</div>
+                    </div>
+
+                    <div class="artist-card" data-artist="6">
+                        <img src="/images/tatu_200_po_vstrechnoy.jpg" alt="Обложка альбома 200 по встречной" class="artist-avatar">
+                        <div class="artist-name">t.A.T.u.</div>
+                        <div class="artist-genre">Поп, Европоп</div>
+                        <div class="artist-stats">40 треков · 145.4K прослушиваний</div>
+                    </div>
+
+                    <div class="artist-card" data-artist="8">
+                        <img src="/images/gosti_iz_buduschego_eto_silnee.jpg" alt="Обложка альбома Это сильнее меня, часть 2" class="artist-avatar">
+                        <div class="artist-name">Гости из будущего</div>
+                        <div class="artist-genre">Дрим-поп, Европоп</div>
+                        <div class="artist-stats">70 треков · 105.1K прослушиваний</div>
+                    </div>
+                </div>
+
+                <div class="section-title" style="margin-top: 40px;">
+                    <h3 class="accent">ЕЩЁ ИЗ 2000-Х</h3>
+                </div>
+
+                <div class="artists-grid">
+                    <div class="artist-card" data-artist="9">
+                        <img src="/images/zveri_rayoni_kvartali.jpg" alt="Обложка альбома Районы-кварталы" class="artist-avatar">
+                        <div class="artist-name">Звери</div>
+                        <div class="artist-genre">Поп-рок, Рок</div>
+                        <div class="artist-stats">85 треков · 122.7K прослушиваний</div>
+                    </div>
+
+                    <div class="artist-card" data-artist="10">
+                        <img src="/images/chicherina_sni.jpg" alt="Обложка альбома Сны" class="artist-avatar">
+                        <div class="artist-name">Чичерина</div>
+                        <div class="artist-genre">Поп-рок, Альтернатива</div>
+                        <div class="artist-stats">42 трека · 68.4K прослушиваний</div>
+                    </div>
+
+                    <div class="artist-card" data-artist="11">
+                        <img src="/images/hifi_zvezdnaya_seriya.jpg" alt="Обложка альбома Звездная серия" class="artist-avatar">
+                        <div class="artist-name">Hi-Fi</div>
+                        <div class="artist-genre">Дэнс-поп, Европоп</div>
+                        <div class="artist-stats">50 треков · 90.3K прослушиваний</div>
+                    </div>
+
+                    <div class="artist-card" data-artist="12">
+                        <img src="/images/reflex_ya_tebya_vsegda.jpg" alt="Обложка альбома Я тебя всегда буду ждать" class="artist-avatar">
+                        <div class="artist-name">REFLEX</div>
+                        <div class="artist-genre">Европоп, Танцевальная</div>
+                        <div class="artist-stats">65 треков · 88.9K прослушиваний</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Плеер -->
+        <section class="player" aria-label="Мини-плеер" id="miniPlayer">
+            <div class="cover">
+            <img src="/images/semeinoe_photo_zoya_yachenko.jpg" alt="Обложка трека">
+            </div>
+            <div class="track-info">
+            <div class="track-title">Семейное фото</div>
+            <div class="track-meta">Зоя Ященко, Белая Гвардия · Венеция</div>
+            <div class="progress">
+                <div class="progress-bar" style="width: 35%;"></div>
+            </div>
+            </div>
+            <div class="time">
+            00:00
+            <small>00:00</small>
+            </div>
+            <button class="action" type="button">Работа с треком</button>
+        </section>
+        </div>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const miniPlayer = document.getElementById('miniPlayer');
+            const artistCards = document.querySelectorAll('.artist-card');
+            const filterPills = document.querySelectorAll('.filters .pill');
+            const letterButtons = document.querySelectorAll('.letter-btn');
+            const searchInput = document.querySelector('.search-artists');
+
+            const sidebarButtons = document.querySelectorAll('.sb-btn');
+            sidebarButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                if (this.textContent === 'Главная') {
+                    window.location.href = '../index.html';
+                }
+                if (this.textContent === 'Новинки') {
+                    window.location.href = '../pages/new_albums.html';
+                }
+                if (this.textContent === 'Артисты') {
+                    window.location.href = '../pages/artists.html';
+                }
+                if (this.textContent === 'Добавить трек') {
+                    window.location.href = '../pages/add_track.html';
+                }
+                });
+            });
+            
+            // Обработчик клика на плеер
+            miniPlayer.addEventListener('click', function(e) {
+            if (!e.target.closest('.action')) {
+                openTrackCard();
+            }
+            });
+            
+            // Обработчик клика на кнопку "Работа с треком"
+            const actionButton = miniPlayer.querySelector('.action');
+            actionButton.addEventListener('click', function(e) {
+            e.stopPropagation(); 
+            console.log('Работа с треком');
+            });
+            
+            // Обработчик клика на карточки артистов
+            artistCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const artistId = this.getAttribute('data-artist');
+                openArtistPage(artistId);
+            });
+            });
+            
+            // Обработчик фильтров
+            filterPills.forEach(pill => {
+            pill.addEventListener('click', function() {
+                filterPills.forEach(p => p.classList.remove('active'));
+                this.classList.add('active');
+                filterArtists(this.textContent);
+            });
+            });
+            
+            // Обработчик алфавитных кнопок
+            letterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                letterButtons.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                filterByLetter(this.textContent);
+            });
+            });
+            
+            // Обработчик поиска
+            searchInput.addEventListener('input', function() {
+            searchArtists(this.value);
+            });
+            
+            function openTrackCard(trackId = null) {
+            const url = trackId ? `pages/track-card.html?track=${trackId}` : 'pages/track-card.html';
+            window.location.href = url;
+            }
+            
+            function openArtistPage(artistId) {
+            window.location.href = `pages/artist-profile.html?artist=${artistId}`;
+            }
+            
+            function filterArtists(filter) {
+            console.log('Фильтр артистов:', filter);
+            // Здесь будет логика фильтрации артистов
+            }
+            
+            function filterByLetter(letter) {
+            console.log('Фильтр по букве:', letter);
+            // Здесь будет логика фильтрации по букве
+            }
+            
+            function searchArtists(query) {
+            console.log('Поиск артистов:', query);
+            // Здесь будет логика поиска артистов
+            }
+        });
+        </script>
+
+    </body>
+</html>

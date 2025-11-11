@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>play it twice — трек</title>
+  <link rel="stylesheet" href="/styles/track-card.css">
+  <link rel="stylesheet" href="/styles/collection.css">
+
+  <link rel="icon" type="image/png" href="/images/logo.png">
+</head>
+<body>
+
+    <div class="track-card">
+        <div class="left-column">
+            <div class="cover">
+            <img src="/images/semeinoe_photo_zoya_yachenko.jpg" alt="Обложка альбома">
+            </div>
+            
+            <div class="track-meta">
+            <h3 class="track-title">Семейное фото</h3>
+            <p class="track-artist">Зоя Ященко, Белая Гвардия · Венеция</p>
+            </div>
+
+            <div class="player">
+            <span class="time">00:00</span>
+            <div class="progress"></div>
+            <span class="time">00:00</span>
+            </div>
+            
+            <button class="action">Работа с треком</button>
+        </div>
+    
+        <div class="right-column">
+            <div class="tabs">
+                <span class="tab active" data-tab="lyrics">текст</span>
+                <span class="separator">/</span>
+                <span class="tab" data-tab="queue">очередь</span>
+            </div>
+
+            <!-- Контент для текста песни -->
+            <div class="tab-content active" id="lyrics-content">
+                <div class="lyrics">
+                <p>
+                    И когда они выходят из рамы,<br>
+                    Улыбаясь, поправляют прически,<br>
+                    Я для каждого в просторной прихожей<br>
+                    Оставляю зеркала и расчески.<br>
+                    И когда они гуляют по дому,<br>
+                    И смеются, и играют словами,<br>
+                    Я для них сдвигаю мягкие кресла<br>
+                    И растапливаю печку дровами.<br><br>
+
+                    А когда они листают альбомы,<br>
+                    Удивляясь, головами качают,<br>
+                    Я несу на блюде синие сливы,<br>
+                    Наливаю золотистого чаю.<br>
+                    А потом ныряю в кресло-качалку<br>
+                    И ловлю буквально каждую фразу!<br>
+                    Жаль, они меня не могут увидеть<br>
+                    Даже мельком, даже краешком глаза.<br><br>
+
+                    Их истории давно устарели,<br>
+                    Платья тоже быстро вышли из моды,<br>
+                    Но остались те же ясные лица,<br>
+                    И во взгляде будто больше свободы.<br>
+                    Я люблю их, вот таких старомодных,<br>
+                    И заглядываю в зеркальце, ну же,<br>
+                    И ищу в себе портретное сходство:<br>
+                    Нос – ничей, зато «фамильные» уши!<br><br>
+
+                    И стараюсь быть такой же свободной,<br>
+                    Подчиняюсь только голосу крови!<br>
+                    У меня такой же крепкий характер,<br>
+                    И такие, как у бабушки, брови…<br>
+                    Иногда я расчехляю гитару<br>
+                    И наигрываю: до-ре-ми-соль-фа…<br>
+                    И тогда они меня вспоминают,<br>
+                    Я для них все та же девочка в гольфах.<br><br>
+
+                    Между нами встало время стеною:<br>
+                    Ни просвета, ни двери, ни окошка,<br>
+                    Между нами будто тонкая пленка,<br>
+                    Сквозь которую курсирует кошка.<br>
+                    А потом упрямо близится полночь,<br>
+                    И тогда они уходят обратно.<br>
+                    Я свечу им фонарем на тропинку,<br>
+                    Как же мне теперь без них, непонятно.<br><br>
+
+                    Унесла их от меня электричка,<br>
+                    Взмыла в небо желтой искоркой плавной,<br>
+                    И запели в синих травах цикады,<br>
+                    Это было так давно, так недавно.<br>
+                    Протираю золоченую раму,<br>
+                    Помоги им в долгих странствиях, Боже!<br>
+                    Ведь когда тебе совсем одиноко,<br>
+                    Так приятно вспоминать о хорошем.
+                </p>
+                </div>
+            </div>
+
+            <!-- Контент для очереди -->
+            <div class="tab-content" id="queue-content">
+                <div class="queue-content">
+                    <!-- Пример содержимого очереди -->
+                    <article class="track">
+                        <div class="track__thumb">
+                            <img src="/images/semeinoe_photo_zoya_yachenko.jpg" alt="">
+                        </div>
+                        <div class="track__info">
+                            <h3 class="track__title">Твоими нитями</h3>
+                            <div class="track__meta">Зоя Ященко, Белая Гвардия · Венеция</div>
+                        </div>
+                        <button class="track__btn">Работа с треком</button>
+                    </article>
+                    <article class="track">
+                        <div class="track__thumb">
+                            <img src="/images/semeinoe_photo_zoya_yachenko.jpg" alt="">
+                        </div>
+                        <div class="track__info">
+                            <h3 class="track__title">Мне бы хотелось</h3>
+                            <div class="track__meta">Зоя Ященко, Белая Гвардия · Венеция</div>
+                        </div>
+                        <button class="track__btn">Работа с треком</button>
+                    </article>
+                    <article class="track">
+                        <div class="track__thumb">
+                            <img src="/images/semeinoe_photo_zoya_yachenko.jpg" alt="">
+                        </div>
+                        <div class="track__info">
+                            <h3 class="track__title">Шли они</h3>
+                            <div class="track__meta">Зоя Ященко, Белая Гвардия · Венеция</div>
+                        </div>
+                        <button class="track__btn">Работа с треком</button>
+                    </article>
+                    <article class="track">
+                        <div class="track__thumb">
+                            <img src="/images/semeinoe_photo_zoya_yachenko.jpg" alt="">
+                        </div>
+                        <div class="track__info">
+                            <h3 class="track__title">Один на один с пустотой</h3>
+                            <div class="track__meta">Зоя Ященко, Белая Гвардия · Венеция</div>
+                        </div>
+                        <button class="track__btn">Работа с треком</button>
+                    </article>
+                    <article class="track">
+                        <div class="track__thumb">
+                            <img src="/images/semeinoe_photo_zoya_yachenko.jpg" alt="">
+                        </div>
+                        <div class="track__info">
+                            <h3 class="track__title">Новогодняя</h3>
+                            <div class="track__meta">Зоя Ященко, Белая Гвардия · Венеция</div>
+                        </div>
+                        <button class="track__btn">Работа с треком</button>
+                    </article>
+                    <article class="track">
+                        <div class="track__thumb">
+                            <img src="/images/semeinoe_photo_zoya_yachenko.jpg" alt="">
+                        </div>
+                        <div class="track__info">
+                            <h3 class="track__title">Грузия</h3>
+                            <div class="track__meta">Зоя Ященко, Белая Гвардия · Венеция</div>
+                        </div>
+                        <button class="track__btn">Работа с треком</button>
+                    </article>
+                    
+                </div>
+        </div>
+    </div>
+</div>
+ <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // Убираем активный класс у всех табов
+                    tabs.forEach(t => t.classList.remove('active'));
+                    // Добавляем активный класс текущему табу
+                    this.classList.add('active');
+                    
+                    // Скрываем все контенты
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    // Показываем соответствующий контент
+                    document.getElementById(tabId + '-content').classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>

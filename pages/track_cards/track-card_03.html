@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>play it twice — трек</title>
+  <link rel="stylesheet" href="/styles/track-card.css">
+  <link rel="stylesheet" href="/styles/collection.css">
+
+  <link rel="icon" type="image/png" href="/images/logo.png">
+</head>
+<body>
+
+    <div class="track-card">
+        <div class="left-column">
+            <div class="cover">
+            <img src="/images/dnevniki.jpg" alt="Обложка альбома">
+            </div>
+            
+            <div class="track-meta">
+            <h3 class="track-title">25-й этаж</h3>
+            <p class="track-artist">Корни · Дневники Лёши Кабанова</p>
+            </div>
+
+            <div class="player">
+            <span class="time">00:00</span>
+            <div class="progress"></div>
+            <span class="time">00:00</span>
+            </div>
+            
+            <button class="action">Работа с треком</button>
+        </div>
+    
+        <div class="right-column">
+            <div class="tabs">
+                <span class="tab active" data-tab="lyrics">текст</span>
+                <span class="separator">/</span>
+                <span class="tab" data-tab="queue">очередь</span>
+            </div>
+
+            <!-- Контент для текста песни -->
+            <div class="tab-content active" id="lyrics-content">
+                <div class="lyrics">
+                <p>
+                    Привет тебе, мой Третий Рим<br>
+                    Твой одинокий пилигрим<br>
+                    Вернулся в город детства в поисках огня<br>
+                    На перекрёстке всех времён<br>
+                    Июльским ветром окрылён<br>
+                    Дождями летними встречай, встречай меня<br><br>
+
+                    Кто за три моря уходил<br>
+                    Тому вернуться хватит сил<br>
+                    Лететь по ветру ненаписанным письмом<br>
+                    А солнце льёт лимонный сок<br>
+                    И тает сахарный песок<br>
+                    И тёплый вечер так прозрачен, невесом<br>
+
+                    А моя любовь живёт на двадцать пятом этаже<br>
+                    А твоя душа зовёт - и я учусь летать уже<br>
+                    А моя любовь живёт на двадцать пятом этаже<br>
+                    А моя душа летит к твоей душе (Летит к твоей душе)<br>
+
+                    Не спят каналы и мосты<br>
+                    И полуночные цветы<br>
+                    Волшебным запахом наполнят все слова<br>
+                    Где в золотистом свете фар<br>
+                    Плывёт по воздуху бульвар<br>
+                    Касаясь сонных облаков едва-едва<br>
+
+                    Ты веришь птицам и стихам<br>
+                    Стекают звёзды по щекам<br>
+                    И в тёмных лужах отражаются огни<br>
+                    Бензином город весь пропах<br>
+                    И мятным снегом на губах<br>
+                    Растает сказка о любви и эти дни<br>
+
+                    А моя любовь живёт на двадцать пятом этаже<br>
+                    А твоя душа зовёт - и я учусь летать уже<br>
+                    А моя любовь живёт на двадцать пятом этаже<br>
+                    А моя душа летит к твоей душе (Летит к твоей душе)<br>
+
+                    Ты от меня так далеко<br>
+                    К тебе добраться нелегко<br>
+                    Ты где-то в небе среди звезд<br>
+                    И опадают лепестки увядших роз<br>
+                    Я буду вечно встречи ждать<br>
+                    Пока не научусь мечтать<br>
+                    Пока не научусь любить<br>
+                    Пока не научусь летать<br>
+
+                    А моя любовь живет на двадцать пятом этаже
+                </p>
+                </div>
+            </div>
+
+            <!-- Контент для очереди -->
+            <div class="tab-content" id="queue-content">
+                <div class="queue-content">
+                    <!-- Пример содержимого очереди -->
+                    <article class="track">
+                        <div class="track__thumb">
+                            <img src="/images/semeinoe_photo_zoya_yachenko.jpg" alt="">
+                        </div>
+                        <div class="track__info">
+                            <h3 class="track__title">Твоими нитями</h3>
+                            <div class="track__meta">Зоя Ященко, Белая Гвардия · Венеция</div>
+                        </div>
+                        <button class="track__btn">Работа с треком</button>
+                    </article>
+                    <article class="track">
+                        <div class="track__thumb">
+                            <img src="/images/semeinoe_photo_zoya_yachenko.jpg" alt="">
+                        </div>
+                        <div class="track__info">
+                            <h3 class="track__title">Мне бы хотелось</h3>
+                            <div class="track__meta">Зоя Ященко, Белая Гвардия · Венеция</div>
+                        </div>
+                        <button class="track__btn">Работа с треком</button>
+                    </article>
+                    <article class="track">
+                        <div class="track__thumb">
+                            <img src="/images/semeinoe_photo_zoya_yachenko.jpg" alt="">
+                        </div>
+                        <div class="track__info">
+                            <h3 class="track__title">Шли они</h3>
+                            <div class="track__meta">Зоя Ященко, Белая Гвардия · Венеция</div>
+                        </div>
+                        <button class="track__btn">Работа с треком</button>
+                    </article>
+                    <article class="track">
+                        <div class="track__thumb">
+                            <img src="/images/semeinoe_photo_zoya_yachenko.jpg" alt="">
+                        </div>
+                        <div class="track__info">
+                            <h3 class="track__title">Один на один с пустотой</h3>
+                            <div class="track__meta">Зоя Ященко, Белая Гвардия · Венеция</div>
+                        </div>
+                        <button class="track__btn">Работа с треком</button>
+                    </article>
+                    <article class="track">
+                        <div class="track__thumb">
+                            <img src="/images/semeinoe_photo_zoya_yachenko.jpg" alt="">
+                        </div>
+                        <div class="track__info">
+                            <h3 class="track__title">Новогодняя</h3>
+                            <div class="track__meta">Зоя Ященко, Белая Гвардия · Венеция</div>
+                        </div>
+                        <button class="track__btn">Работа с треком</button>
+                    </article>
+                    <article class="track">
+                        <div class="track__thumb">
+                            <img src="/images/semeinoe_photo_zoya_yachenko.jpg" alt="">
+                        </div>
+                        <div class="track__info">
+                            <h3 class="track__title">Грузия</h3>
+                            <div class="track__meta">Зоя Ященко, Белая Гвардия · Венеция</div>
+                        </div>
+                        <button class="track__btn">Работа с треком</button>
+                    </article>
+                    
+                </div>
+        </div>
+    </div>
+</div>
+ <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // Убираем активный класс у всех табов
+                    tabs.forEach(t => t.classList.remove('active'));
+                    // Добавляем активный класс текущему табу
+                    this.classList.add('active');
+                    
+                    // Скрываем все контенты
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    // Показываем соответствующий контент
+                    document.getElementById(tabId + '-content').classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>

@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>play it twice — трек</title>
+  <link rel="stylesheet" href="/styles/track-card.css">
+  <link rel="stylesheet" href="/styles/collection.css">
+
+  <link rel="icon" type="image/png" href="/images/logo.png">
+</head>
+<body>
+
+    <div class="track-card">
+        <div class="left-column">
+            <div class="cover">
+            <img src="/images/inside.jpg" alt="Обложка альбома">
+            </div>
+            
+            <div class="track-meta">
+            <h3 class="track-title">Мало рая</h3>
+            <p class="track-artist">Bahroma · Внутри</p>
+            </div>
+
+            <div class="player">
+            <span class="time">00:00</span>
+            <div class="progress"></div>
+            <span class="time">00:00</span>
+            </div>
+            
+            <button class="action">Работа с треком</button>
+        </div>
+    
+        <div class="right-column">
+            <div class="tabs">
+                <span class="tab active" data-tab="lyrics">текст</span>
+                <span class="separator">/</span>
+                <span class="tab" data-tab="queue">очередь</span>
+            </div>
+
+            <!-- Контент для текста песни -->
+            <div class="tab-content active" id="lyrics-content">
+                <div class="lyrics">
+                <p>
+                    Извини, что все так вышло<br>
+                    Я хотел как можно тише<br>
+                    Уходить, не возвращаться<br>
+                    Забывать и забываться<br>
+                    И кому какое дело<br>
+                    У кого какого цвета<br>
+                    Души были все наружу<br>
+                    Оставалось только слушать<br>
+                    Ветер, листья, камни, море<br>
+                    Забираю все с собою<br>
+                    Оставляю только память<br>
+                    Память не стереть, не сгладить<br>
+                    Так мало мне рая<br>
+                    Хочу что бы хватала<br>
+                    Как мало мне рая<br>
+                    Хочу что бы хватала<br>
+                    Без меня скучаешь где то ты<br>
+                    Прости меня за это<br>
+                    Без меня проходят лето и зима<br>
+                    Без тебя моя планета<br>
+                    И глаза другого цвета<br>
+                    Без тебя мои проходят дни<br>
+                    Без тебя<br>
+                    Ну допустим, предположим<br>
+                    Мы с тобою так похожи<br>
+                    И невидимою нитью связанны наши ладони<br>
+                    Черно белое на память<br>
+                    Что, зачем хочу исправить?<br>
+                    И запутанные фразы<br>
+                    Сердце трогают словами<br>
+                    Разводи теперь руками<br>
+                    Слишком поздно<br>
+                    Знаешь<br>
+                    Сами оставляем только память<br>
+                    Память не стереть, не сгладить<br>
+                    Так мало мне рая<br>
+                    Хочу что бы хватала<br>
+                    Так мало мне рая<br>
+                    Хочу что бы хватала<br>
+                    Без меня скучаешь где то ты<br>
+                    Прости меня за это<br>
+                    Без меня проходят лето и зима<br>
+                    Без тебя моя планета<br>
+                    И глаза другого цвета<br>
+                    Без тебя мои проходят дни<br>
+                    Без тебя
+                </p>
+                </div>
+            </div>
+
+            <!-- Контент для очереди -->
+            <div class="tab-content" id="queue-content">
+                <div class="queue-content">
+                    <!-- Пример содержимого очереди -->
+                    <article class="track">
+                        <div class="track__thumb">
+                            <img src="/images/semeinoe_photo_zoya_yachenko.jpg" alt="">
+                        </div>
+                        <div class="track__info">
+                            <h3 class="track__title">Твоими нитями</h3>
+                            <div class="track__meta">Зоя Ященко, Белая Гвардия · Венеция</div>
+                        </div>
+                        <button class="track__btn">Работа с треком</button>
+                    </article>
+                    <article class="track">
+                        <div class="track__thumb">
+                            <img src="/images/semeinoe_photo_zoya_yachenko.jpg" alt="">
+                        </div>
+                        <div class="track__info">
+                            <h3 class="track__title">Мне бы хотелось</h3>
+                            <div class="track__meta">Зоя Ященко, Белая Гвардия · Венеция</div>
+                        </div>
+                        <button class="track__btn">Работа с треком</button>
+                    </article>
+                    <article class="track">
+                        <div class="track__thumb">
+                            <img src="/images/semeinoe_photo_zoya_yachenko.jpg" alt="">
+                        </div>
+                        <div class="track__info">
+                            <h3 class="track__title">Шли они</h3>
+                            <div class="track__meta">Зоя Ященко, Белая Гвардия · Венеция</div>
+                        </div>
+                        <button class="track__btn">Работа с треком</button>
+                    </article>
+                    <article class="track">
+                        <div class="track__thumb">
+                            <img src="/images/semeinoe_photo_zoya_yachenko.jpg" alt="">
+                        </div>
+                        <div class="track__info">
+                            <h3 class="track__title">Один на один с пустотой</h3>
+                            <div class="track__meta">Зоя Ященко, Белая Гвардия · Венеция</div>
+                        </div>
+                        <button class="track__btn">Работа с треком</button>
+                    </article>
+                    <article class="track">
+                        <div class="track__thumb">
+                            <img src="/images/semeinoe_photo_zoya_yachenko.jpg" alt="">
+                        </div>
+                        <div class="track__info">
+                            <h3 class="track__title">Новогодняя</h3>
+                            <div class="track__meta">Зоя Ященко, Белая Гвардия · Венеция</div>
+                        </div>
+                        <button class="track__btn">Работа с треком</button>
+                    </article>
+                    <article class="track">
+                        <div class="track__thumb">
+                            <img src="/images/semeinoe_photo_zoya_yachenko.jpg" alt="">
+                        </div>
+                        <div class="track__info">
+                            <h3 class="track__title">Грузия</h3>
+                            <div class="track__meta">Зоя Ященко, Белая Гвардия · Венеция</div>
+                        </div>
+                        <button class="track__btn">Работа с треком</button>
+                    </article>
+                    
+                </div>
+        </div>
+    </div>
+</div>
+ <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // Убираем активный класс у всех табов
+                    tabs.forEach(t => t.classList.remove('active'));
+                    // Добавляем активный класс текущему табу
+                    this.classList.add('active');
+                    
+                    // Скрываем все контенты
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    // Показываем соответствующий контент
+                    document.getElementById(tabId + '-content').classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>

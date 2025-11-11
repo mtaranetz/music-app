@@ -1,0 +1,146 @@
+@font-face {
+  font-family: 'Unbounded';
+  src: url('./fonts/unbounded.ttf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+    font-family: 'Unbounded', system-ui, sans-serif;  
+    background: #f9f9f9;
+    color: #333;
+}
+
+.track-card {
+  display: grid;
+  grid-template-columns: 40% 60%;
+  gap: 30px;
+  padding: 20px;
+  padding-bottom: 15px;
+  padding-top: 10px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  max-width: 1000px;
+  margin: 10px auto;
+}
+
+.left-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cover img {
+  width: 100%;
+  max-width: 350px;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+.track-meta {
+  text-align: center;
+}
+
+.track-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.track-artist {
+  margin: 5px 0 15px;
+  color: #777;
+  font-size: 14px;
+}
+
+.player {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.player .progress {
+  flex: 1;
+  height: 4px;
+  background: #ddd;
+  border-radius: 2px;
+}
+
+.player .time {
+  font-size: 12px;
+  color: #666;
+}
+
+.action {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  background: #eaeaea;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.action:hover {
+  background: #d5d5d5;
+}
+
+.right-column {
+  font-size: 14px;
+  line-height: 1.6;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.right-column::-webkit-scrollbar {
+  display: none;               /* Chrome, Safari */
+}
+
+.tabs {
+  font-size: 14px;
+  margin-bottom: 15px;
+  user-select: none; /* чтобы не выделялось при клике */
+}
+
+.tab {
+  cursor: pointer;
+  color: #777; /* серый */
+}
+
+.tab.active {
+  color: #000; /* активный — чёрный */
+  font-weight: bold;
+}
+
+.separator {
+  margin: 0 6px;
+  color: #999;
+}
+
+
+.lyrics h4 {
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #444;
+}
+
+.tab-content {
+      display: none;
+    }
+    
+.tab-content.active {
+  display: block;
+}
+
+.queue-content {
+  border-radius: 8px;
+  min-height: 200px;
+  padding-right: 20px;
+}

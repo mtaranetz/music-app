@@ -1,0 +1,421 @@
+/*переменные*/
+:root{
+  --bg: #efefef;
+  --panel: #ffffff;
+  --panel-2: #f3f3f6;
+  --text: #222;
+  --muted: #7a7a80;
+  --line: #e6e6ea;
+  --accent: #111;
+  --primary: #dcdde5;
+  --primary-strong:#cfd1db;
+  --shadow: 0 8px 24px rgba(0,0,0,.08), 0 1px 0 rgba(0,0,0,.05);
+  --radius: 16px;
+}
+
+/* === Подключение шрифтов === */
+@font-face {
+  font-family: 'Unbounded';
+  src: url('./fonts/unbounded.ttf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Shirota';
+  src: url('./fonts/shirota.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+}
+
+html, body {
+  overflow-x: hidden;
+}
+
+body {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE, Edge */
+}
+body::-webkit-scrollbar { 
+  display: none; /* Chrome, Safari */
+}
+
+body{
+  margin: 0;
+  font-family: 'Unbounded', system-ui, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  padding-bottom: 96px;
+}
+
+/* контейнер всей страницы */
+.wrapper{
+  max-width: 1440px;
+  margin: 24px auto 32px;
+  padding: 16px;
+  background: #eaeaec;
+  border-radius: 12px;
+}
+
+/* === Шапка === */
+.header{
+  display: grid;
+  grid-template-columns: 160px 1fr auto;
+  gap: 16px;
+  align-items: center;
+  background: var(--panel);
+  border-radius: var(--radius);
+  padding: 0px 16px;
+  padding-left: 32px;
+  box-shadow: var(--shadow);
+}
+
+.logo img{
+  display: block;
+  height: 100px;
+  width: auto;
+}
+
+.branding{
+  display: flex;
+  align-items: flex-start; /* все элементы прижимаются к верхнему краю */
+}
+
+.branding > *:not(:last-child){ margin-right: 8px; } /* отступ между логотипом и текстом */
+
+.brand-name{
+    font-family: 'Unbounded', sans-serif; /* или другой акцентный шрифт */
+    font-weight: 700;
+    font-size: 40px;
+    color: #333;
+    line-height: 1;          /* или 0.95–0.98 для более плотной посадки */
+    margin: 0;                /* убираем отступы сверху и снизу */
+    display: inline-block;   /* чтобы трансформы работали предсказуемо */
+    transform: translateY(-5px);
+
+}
+
+.brand-tag{
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: #777;
+}
+
+.search-btn{
+  border: 0;
+  background: var(--panel-2);
+  color: black;
+  opacity: .5;
+  font-family: 'Unbounded', system-ui, sans-serif;
+  font-size: 20px;
+  padding: 9px 32px;
+  border-radius: 15px;
+  cursor: pointer;
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,.05);
+}
+.search-btn:hover{ filter: brightness(0.98); }
+.search-btn:focus-visible{ outline: 3px solid #9ecbff; outline-offset: 2px; }
+
+/* === Основной блок: сайдбар + карточка === */
+.main{
+  display: grid;
+  grid-template-columns: 190px 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+/* Сайдбар */
+.sidebar{
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  background: var(--panel);
+  border-radius: var(--radius);
+  padding: 12px;
+  box-shadow: var(--shadow);
+}
+
+.sb-btn{
+  appearance: none;
+  border: 0;
+  background: var(--panel-2);
+  color: #45454d;
+  padding: 12px 14px;
+  border-radius: 12px;
+  text-align: left;
+  font-weight: 400;
+  cursor: pointer;
+  font-family: 'Unbounded', system-ui, sans-serif;
+
+}
+.sb-btn:hover{ filter: brightness(.98); }
+
+.sb-btn[aria-current="page"]{
+  background: var(--primary-strong);
+}
+
+
+/* Центральная карточка */
+.card{
+  background: var(--panel);
+  border-radius: var(--radius);
+  padding: 22px 22px 16px;
+  box-shadow: var(--shadow);
+  position: relative;
+  margin-bottom: 100px; /* чтобы плеер не перекрывал контент */
+}
+
+.accent{
+    margin: 0 0 14px;
+    font-family: 'Shirota', sans-serif;
+    text-transform: uppercase;
+    font-size: 35px;
+    line-height: 1.1;
+    font-weight: 100;
+    color: var(--accent);
+    text-align: center;
+}
+
+
+/* Фильтры (актуальная версия под <select>) */
+.filters { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 18px; }
+
+/* Пилюля — без грида, просто флекс + место справа под стрелку/клик */
+.pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: 10px 16px;
+  padding-right: 36px;         /* место под стрелку и hit-area */
+  border-radius: 999px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  color: #444;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.pill .btn-text { white-space: nowrap; }
+
+/* селект — прозрачный оверлей справа, не влияет на вёрстку */
+.pill-select {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 36px;                 /* ширина зоны клика */
+  min-width: 36px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: transparent;          /* скрываем «Сбросить фильтр» в закрытом виде */
+  cursor: pointer;
+}
+
+/* при открытии список будет нормальный */
+.pill-select option { color: initial; }
+
+/* стрелка — фиксируем по центру справа */
+.pill::after {
+  content: '';
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  width: .6em;
+  height: .6em;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translateY(-50%) rotate(45deg);
+  pointer-events: none;        /* клики идут в <select> */
+}
+
+/* фокус */
+.pill:focus-within { outline: 3px solid #9ecbff; outline-offset: 2px; }
+
+/* фокус показываем на контейнере */
+.pill:focus-within { outline: 3px solid #9ecbff; outline-offset: 2px; }
+
+/* а сам select — без собственной обводки */
+.pill-select:focus,
+.pill-select:focus-visible {
+  outline: none;
+}
+
+/* для старых webkit (убирает внутреннюю синюю рамку) */
+.pill-select::-webkit-focus-inner { border: 0; }
+
+/* стрелка — декор, не получает фокус и клики */
+.pill::after { pointer-events: none; }
+
+/* сам контрол — в нашем шрифте */
+.pill-select,
+.pill-select option,
+.pill-select optgroup {
+  font-family: 'Unbounded', system
+}
+
+
+/* Сетка «настроений» */
+.moods{
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+}
+
+.tile{
+  position: relative;
+  display: block;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #ddd;
+  box-shadow: 0 6px 18px rgba(0,0,0,.10);
+  transform: translateZ(0);
+  aspect-ratio: 1 / 1;
+
+}
+.tile img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .25s ease;
+}
+.tile span{
+  position: absolute;
+  left: 10px;
+  bottom: 8px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  background: rgba(0,0,0,.35);
+  color: #fff;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: .02em;
+  text-shadow: 0 1px 2px rgba(0,0,0,.4);
+}
+.tile:is(:hover,:focus-visible) img{ transform: scale(1.04); }
+.tile:focus-visible{ outline: 3px solid #9ecbff; outline-offset: 2px; }
+
+/* === Плеер === */
+
+.player{
+    display: grid;
+    grid-template-columns: 64px 1fr auto auto;
+    align-items: center;
+    gap: 14px;
+    margin-top: 16px;
+    background: var(--panel);
+    border-radius: var(--radius);
+    padding: 10px 14px;
+    box-shadow: var(--shadow);
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 12px;
+    width: min(1180px, calc(100% - 24px)); /* красиво и на десктопе, и на мобильном */
+    z-index: 50;
+}
+
+.cover{
+  width: 64px; height: 64px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #cfd1db;
+}
+.cover img{ width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.track-info{ min-width: 0; }
+.track-title{
+  font-weight: 700;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.track-meta{
+  color: var(--muted);
+  font-size: 14px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  margin-top: 2px;
+}
+
+.time{
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: #333;
+}
+.time small{
+  display: block;
+  color: var(--muted);
+  margin-top: 2px;
+  font-size: 12px;
+}
+
+/* Прогресс-бар в плеере */
+.progress{
+  margin-top: 6px;
+  width: 100%;
+  height: 6px;
+  background: var(--panel-2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-bar{
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #66a3ff, #4c82ff);
+  border-radius: 3px;
+  transition: width 0.3s linear;
+}
+
+
+.action{
+  border: 0;
+  background: var(--panel-2);
+  color: #575a62;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  min-width: 300px;
+}
+.action:hover{ filter: brightness(.98); }
+.action:focus-visible{ outline: 3px solid #9ecbff; outline-offset: 2px; }
+
+
+
+/* === Мелочи === */
+img{ max-width: 100%; }
+
+/* === Адаптив === */
+@media (max-width: 1080px){
+  .moods{ grid-template-columns: repeat(4, 1fr); }
+}
+@media (max-width: 900px){
+  .main{ grid-template-columns: 1fr; }
+  .sidebar{ grid-auto-flow: column; grid-auto-columns: 1fr; }
+  .sidebar{ padding: 10px; }
+  .sb-btn{ text-align: center; }
+}
+@media (max-width: 640px){
+  .header{ grid-template-columns: auto 1fr; }
+  .title{ order: 3; grid-column: 1 / -1; }
+  .moods{ grid-template-columns: repeat(3, 1fr); }
+  .player{ grid-template-columns: 56px 1fr auto; }
+  .action{ display:none; } /* прячем правую кнопку на узких экранах */
+}
+@media (max-width: 420px){
+  .moods{ grid-template-columns: repeat(2, 1fr); }
+}
+

@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="icon" type="image/png" href="/images/logo.png">
+  <title>play it twice — главная</title>
+  <link rel="stylesheet" href="/styles/styles.css">
+</head>
+<body>
+
+  <div class="wrapper">
+    <!-- Шапка -->
+    <header class="header">
+      <div class="logo">
+        <img src="/images/logo.png" alt="Логотип сайта" />
+      </div>
+      <div class="branding">
+        <span class="brand-name">play it twice</span>
+        <span class="brand-tag">музыкальный<br>сервис</span>
+      </div>
+      <button class="search-btn" type="button">поиск по каталогу</button>
+    </header>
+    <!-- Основной блок -->
+    <main class="main">
+      <!-- Сайдбар -->
+      <nav class="sidebar" aria-label="Основное меню">
+        <button class="sb-btn" type="button" aria-current="page">Главная</button>
+        <button class="sb-btn" type="button">Новинки</button>
+        <button class="sb-btn" type="button">Артисты</button>
+        <button class="sb-btn" type="button">Добавить трек</button>
+      </nav>
+
+      <!-- Центральная карточка -->
+      <section class="card" aria-labelledby="moodTitle">
+        <h2 id="moodTitle" class="accent">КАК НАСТРОЕНИЕ?</h2>
+        <div class="filters" role="toolbar" aria-label="Фильтры">
+        <label class="pill">
+          <span class="btn-text">Жанр</span>
+          <select class="pill-select" data-filter="Жанр">
+            <option value="">Сбросить фильтр</option>
+            <option>Рок</option>
+            <option>Поп</option>
+            <option>Электроника</option>
+            <option>Хип-хоп</option>
+            <option>Джаз</option>
+            <option>Инди</option>
+            <option>Техно</option>
+          </select>
+        </label>
+
+        <label class="pill">
+          <span class="btn-text">Год</span>
+          <select class="pill-select" data-filter="Год">
+            <option value="">Сбросить фильтр</option>
+            <option>2025</option>
+            <option>2024</option>
+            <option>2020–2023</option>
+            <option>2010–2019</option>
+            <option>До 2010</option>
+          </select>
+        </label>
+
+        <label class="pill">
+          <span class="btn-text">Артист</span>
+          <select class="pill-select" data-filter="Артист">
+            <option value="">Сбросить фильтр</option>
+            <option>Зоя Ященко</option>
+            <option>Белая Гвардия</option>
+            <option>Кино</option>
+            <option>Мумий Тролль</option>
+            <option>ДДТ</option>
+          </select>
+        </label>
+
+        <label class="pill">
+          <span class="btn-text">Страна</span>
+          <select class="pill-select" data-filter="Страна">
+            <option value="">Сбросить фильтр</option>
+            <option>Россия</option>
+            <option>Белоруссия</option>
+            <option>США</option>
+            <option>Великобритания</option>
+            <option>Германия</option>
+            <option>Франция</option>
+          </select>
+        </label>
+      </div>
+
+
+        <div class="moods">
+          <a class="tile" href="#">
+            <img src="./images/mood-top100.jpg" alt="Топ-100">
+            <span>Топ-100</span>
+          </a>
+          <a class="tile" href="#">
+            <img src="./images/mood-top25.jpg" alt="Топ-25">
+            <span>Топ-25</span>
+          </a>
+          <a class="tile" href="#">
+            <img src="./images/mood-top10.jpg" alt="Топ-10">
+            <span>Топ-10</span>
+          </a>
+          <a class="tile" href="#">
+            <img src="./images/mood-chill.jpg" alt="Чилл">
+            <span>Чилл</span>
+          </a>
+          <a class="tile" href="#">
+            <img src="./images/mood-techno.jpg" alt="Техно">
+            <span>Техно</span>
+          </a>
+          <a class="tile" href="#">
+            <img src="./images/mood-work.jpg" alt="Работа">
+            <span>Работа</span>
+          </a>
+          <a class="tile" href="#">
+            <img src="./images/mood-walk.jpg" alt="Гулять">
+            <span>Гулять</span>
+          </a>
+          <a class="tile" href="#">
+            <img src="./images/mood-dance.jpg" alt="Танцы">
+            <span>Танцы</span>
+          </a>
+          <a class="tile" href="#">
+            <img src="./images/mood-hiphop.jpg" alt="Хип-хоп">
+            <span>Хипхоп</span>
+          </a>
+          <a class="tile" href="#">
+            <img src="./images/mood-rap.jpg" alt="Рэп">
+            <span>Рэп</span>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <!-- Плеер -->
+    <section class="player" aria-label="Мини-плеер" id="miniPlayer">
+      <div class="cover">
+        <img src="./images/semeinoe_photo_zoya_yachenko.jpg" alt="Обложка трека">
+      </div>
+      <div class="track-info">
+        <div class="track-title">Семейное фото</div>
+        <div class="track-meta">Зоя Ященко, Белая Гвардия · Венеция</div>
+        <div class="progress">
+          <div class="progress-bar" style="width: 35%;"></div>
+        </div>
+      </div>
+      <div class="time">
+        00:00
+        <small>03:20</small>
+      </div>
+      <button class="action" type="button">Работа с треком</button>
+    </section>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+      // === Фильтры на <select> ===
+    const filtersEl = document.querySelector('.filters');
+
+    function updateLabel(select) {
+      const labelSpan = select.closest('.pill').querySelector('.btn-text');
+      const base = select.dataset.filter; // всегда исходный заголовок
+      labelSpan.textContent = select.value ? `${base}: ${select.value}` : base;
+    }
+
+    filtersEl.addEventListener('change', (e) => {
+      const select = e.target.closest('.pill-select');
+      if (!select) return;
+      updateLabel(select);
+
+      // единое событие для внешней логики
+      filtersEl.dispatchEvent(new CustomEvent('filterchange', {
+        detail: { filter: select.dataset.filter, value: select.value || null }
+      }));
+    });
+
+    // при загрузке привести подписи в порядок
+    document.querySelectorAll('.pill-select').forEach(updateLabel);
+
+      const miniPlayer = document.getElementById('miniPlayer');
+      const newPage = document.getElementById('')
+
+      // клик для перемотки 
+      const progWrap = miniPlayer.querySelector('.progress');
+      const progBar  = miniPlayer.querySelector('.progress-bar');
+      const timeBox  = miniPlayer.querySelector('.time');
+      const timeCurNode = timeBox.firstChild; // текст до <small>
+
+      progWrap.addEventListener('click', (e) => {
+        const rect = progWrap.getBoundingClientRect();
+        const x = Math.min(Math.max(e.clientX - rect.left, 0), rect.width);
+        const ratio = rect.width ? x / rect.width : 0;
+
+        progBar.style.width = (ratio * 100) + '%';
+
+        const a = (typeof audio !== 'undefined') ? audio : window.audio;
+
+        if (a && isFinite(a.duration) && a.duration > 0) {
+          a.currentTime = ratio * a.duration;
+
+          if (timeCurNode && timeCurNode.nodeType === Node.TEXT_NODE) {
+            const mm = String(Math.floor(a.currentTime / 60)).padStart(2, '0');
+            const ss = String(Math.floor(a.currentTime % 60)).padStart(2, '0');
+            timeCurNode.textContent = `${mm}:${ss}`;
+          }
+        }
+      });
+
+      
+      // Обработчик клика на плеер
+      miniPlayer.addEventListener('click', function(e) {
+        // Проверяем, что клик не был на кнопке "Работа с треком"
+        if (!e.target.closest('.action') && !e.target.closest('.progress')) {
+          openTrackCard();
+        }
+      });
+      
+      // Обработчик клика на кнопку "Работа с треком"
+      const actionButton = miniPlayer.querySelector('.action');
+      actionButton.addEventListener('click', function(e) {
+        e.stopPropagation(); 
+        console.log('Работа с треком');
+      });
+      
+      function openTrackCard() {
+        window.location.href = '/pages/track_cards/track-card_01.html';
+      }
+
+      const sidebarButtons = document.querySelectorAll('.sb-btn');
+      sidebarButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          if (this.textContent === 'Главная') {
+            window.location.href = '../index.html';
+          }
+          if (this.textContent === 'Новинки') {
+            window.location.href = '../pages/new_albums.html';
+          }
+          if (this.textContent === 'Артисты') {
+            window.location.href = '../pages/artists.html';
+          }
+          if (this.textContent === 'Добавить трек') {
+            window.location.href = '../pages/add_track.html';
+          }
+        });
+      });
+    });
+      
+
+        
+  </script>
+
+</body>
+</html>

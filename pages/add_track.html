@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="icon" type="image/png" href="/images/logo.png">
+  <title>play it twice — добавить трек</title>
+  <link rel="stylesheet" href="/styles/styles.css">
+  <link rel="stylesheet" href="/styles/add_track.css">
+
+</head>
+<body>
+  <div class="wrapper">
+    <!-- Шапка -->
+    <header class="header">
+      <div class="logo">
+        <img src="/images/logo.png" alt="Логотип сайта" />
+      </div>
+      <div class="branding">
+        <span class="brand-name">play it twice</span>
+        <span class="brand-tag">музыкальный<br>сервис</span>
+      </div>
+      <button class="search-btn" type="button">поиск по каталогу</button>
+    </header>
+
+    <!-- Основной блок -->
+    <main class="main">
+      <!-- Сайдбар -->
+      <nav class="sidebar" aria-label="Основное меню">
+        <button class="sb-btn" type="button">Главная</button>
+        <button class="sb-btn" type="button">Новинки</button>
+        <button class="sb-btn" type="button">Артисты</button>
+        <button class="sb-btn" type="button" aria-current="page">Добавить трек</button>
+      </nav>
+
+      <!-- Карточка с формой -->
+      <section class="card" aria-labelledby="addTitle">
+        <h2 id="addTitle" class="accent">добавить трек в каталог</h2>
+
+        <!-- Глобальный блок ошибок/успеха -->
+        <div class="form-banner" role="alert" aria-live="polite"></div>
+
+        <form id="addTrackForm" novalidate class="form-grid">
+          <!-- 1. Название трека — мин. 3 символа -->
+          <div class="field">
+            <label for="title" class="label">Название трека</label>
+            <input id="title" name="title" type="text" class="input" autocomplete="off" required>
+            <div class="helper">
+              <p class="hint">Минимум 3 символа. Допустимы буквы, цифры и базовая пунктуация.</p>
+              <p class="error" id="err-title" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <!-- 2. Артист — только буквы (кириллица/латиница), пробелы и дефисы -->
+          <div class="field">
+            <label for="artist" class="label">Артист</label>
+            <input id="artist" name="artist" type="text" class="input" autocomplete="off" required>
+            <div class="helper">
+              <p class="hint">Только буквы (А–Я, A–Z), пробелы и дефисы. Не короче 2 символов.</p>
+              <p class="error" id="err-artist" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <!-- 3. Жанр — обязателен (выбор из списка) -->
+          <div class="field">
+            <label for="genre" class="label">Жанр</label>
+            <select id="genre" name="genre" class="input select" required>
+              <option value="">— выберите жанр —</option>
+              <option>Рок</option>
+              <option>Поп</option>
+              <option>Электроника</option>
+              <option>Хип-хоп</option>
+              <option>Джаз</option>
+              <option>Инди</option>
+              <option>Техно</option>
+            </select>
+            <div class="helper">
+              <p class="hint">Выберите жанр из списка.</p>
+              <p class="error" id="err-genre" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <!-- 4. Год — целое число в диапазоне 1900..текущий -->
+          <div class="field">
+            <label for="year" class="label">Год выпуска</label>
+            <input id="year" name="year" type="number" inputmode="numeric" class="input" required>
+            <div class="helper">
+              <p class="hint">Целое число от 1900 до текущего года.</p>
+              <p class="error" id="err-year" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <!-- 5. Длительность — формат ММ:СС -->
+          <div class="field">
+            <label for="duration" class="label">Длительность</label>
+            <input id="duration" name="duration" type="text" class="input" placeholder="" required>
+            <div class="helper">
+              <p class="hint">Формат ММ:СС (от 00:10 до 59:59).</p>
+              <p class="error" id="err-duration" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <!-- 6. URL обложки — валидный https и картинка -->
+          <div class="field">
+            <label for="cover" class="label">URL обложки</label>
+            <input id="cover" name="cover" type="url" class="input" inputmode="url" required>
+            <div class="helper">
+              <p class="hint">Ссылка вида https://… .jpg/.jpeg/.png/.webp</p>
+              <p class="error" id="err-cover" aria-live="polite"></p>
+            </div>
+          </div>
+
+            <!-- 7. ISRC — формат кода (опциональные дефисы), строго по шаблону -->
+            <!-- CC-XXX-YY-NNNNN, где:
+            «CC» означает код страны согласно ISO 3166-1 alpha-2
+            «XXX» — трёхзначный алфавитно-цифровой код организации, которая осуществляет регистрацию
+            «YY» — последние две цифры года регистрации
+            «NNNNN» — уникальная последовательность из пяти цифр, определяющая определённую аудиозапись. -->
+          <div class="field">
+            <label for="isrc" class="label">ISRC</label>
+            <input id="isrc" name="isrc" type="text" class="input" autocomplete="off" required>
+            <div class="helper">
+              <p class="hint">Пример: RUABC25 00001 или RU-ABC-25-00001 (2 буквы, 3 буквы/цифры, 2 цифры, 5 цифр).</p>
+              <p class="error" id="err-isrc" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <!-- 8. Email правообладателя — корректный email -->
+          <div class="field">
+            <label for="email" class="label">Email правообладателя</label>
+            <input id="email" name="email" type="email" class="input" autocomplete="email" required>
+            <div class="helper">
+              <p class="hint">Формат: name@example.com</p>
+              <p class="error" id="err-email" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <!-- Кнопки -->
+          <div class="form-actions">
+            <button type="submit" class="action">Добавить в каталог</button>
+            <button type="reset" class="ghost-btn">Сбросить</button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <!-- Мини-плеер (как на главной) -->
+    <section class="player" aria-label="Мини-плеер" id="miniPlayer">
+      <div class="cover">
+        <img src="/images/semeinoe_photo_zoya_yachenko.jpg" alt="Обложка трека">
+      </div>
+      <div class="track-info">
+        <div class="track-title">Семейное фото</div>
+        <div class="track-meta">Зоя Ященко, Белая Гвардия · Венеция</div>
+        <div class="progress">
+          <div class="progress-bar" style="width: 35%;"></div>
+        </div>
+      </div>
+      <div class="time">
+        00:00
+        <small>03:20</small>
+      </div>
+      <button class="action" type="button">Работа с треком</button>
+    </section>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // ==== Навигация сайдбара (как на главной) ====
+      const sidebarButtons = document.querySelectorAll('.sb-btn');
+      sidebarButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+          const t = this.textContent.trim();
+          if (t === 'Главная') window.location.href = '../index.html';
+          if (t === 'Новинки') window.location.href = '../pages/new_albums.html';
+          if (t === 'Артисты') window.location.href = '../pages/artists.html';
+          if (t === 'Добавить трек') window.location.href = '../pages/add_track.html';
+        });
+      });
+
+      // ==== Клик-промотка мини-плеера (из главной) ====
+      const miniPlayer = document.getElementById('miniPlayer');
+      const progWrap = miniPlayer.querySelector('.progress');
+      const progBar  = miniPlayer.querySelector('.progress-bar');
+      const timeBox  = miniPlayer.querySelector('.time');
+      const timeCurNode = timeBox.firstChild;
+
+      progWrap.addEventListener('click', (e) => {
+        const rect = progWrap.getBoundingClientRect();
+        const x = Math.min(Math.max(e.clientX - rect.left, 0), rect.width);
+        const ratio = rect.width ? x / rect.width : 0;
+        progBar.style.width = (ratio * 100) + '%';
+        const a = (typeof audio !== 'undefined') ? audio : window.audio;
+        if (a && isFinite(a.duration) && a.duration > 0) {
+          a.currentTime = ratio * a.duration;
+          if (timeCurNode && timeCurNode.nodeType === Node.TEXT_NODE) {
+            const mm = String(Math.floor(a.currentTime / 60)).padStart(2, '0');
+            const ss = String(Math.floor(a.currentTime % 60)).padStart(2, '0');
+            timeCurNode.textContent = mm + ':' + ss;
+          }
+        }
+      });
+
+      miniPlayer.addEventListener('click', (e) => {
+        if (!e.target.closest('.action') && !e.target.closest('.progress')) {
+          window.location.href = '/pages/track_cards/track-card_01.html';
+        }
+      });
+      miniPlayer.querySelector('.action').addEventListener('click', (e) => {
+        e.stopPropagation();
+        console.log('Работа с треком');
+      });
+
+      // ==== Валидация формы добавления ====
+      
+        const form = document.getElementById('addTrackForm');
+        const banner = document.querySelector('.form-banner');
+
+        function hideBanner(){
+        banner.classList.remove('show', 'ok', 'bad');
+        banner.textContent = '';
+        }
+
+        function showBanner(type, text){
+        banner.textContent = text;
+        banner.classList.remove('ok', 'bad');
+        banner.classList.add(type === 'ok' ? 'ok' : 'bad', 'show');
+        }
+      const fields = {
+        title:    document.getElementById('title'),
+        artist:   document.getElementById('artist'),
+        genre:    document.getElementById('genre'),
+        year:     document.getElementById('year'),
+        duration: document.getElementById('duration'),
+        cover:    document.getElementById('cover'),
+        isrc:     document.getElementById('isrc'),
+        email:    document.getElementById('email')
+      };
+
+      const errors = {
+        title:    document.getElementById('err-title'),
+        artist:   document.getElementById('err-artist'),
+        genre:    document.getElementById('err-genre'),
+        year:     document.getElementById('err-year'),
+        duration: document.getElementById('err-duration'),
+        cover:    document.getElementById('err-cover'),
+        isrc:     document.getElementById('err-isrc'),
+        email:    document.getElementById('err-email')
+      };
+
+      function setError(name, msg) {
+        errors[name].textContent = msg || '';
+        fields[name].classList.toggle('invalid', Boolean(msg));
+      }
+
+      function clearAll() {
+        Object.keys(errors).forEach(k => setError(k, ''));
+        hideBanner();
+        }
+
+      // Отдельные проверки (принципиально разные):
+      function validateTitle() {
+        const v = fields.title.value.trim();
+        if (v.length < 3) return 'Минимум 3 символа.';
+        // допустимы буквы/цифры/базовая пунктуация
+        const ok = /^[\p{L}\p{N}\s.,!?:;'"()\-\u2013\u2014]+$/u.test(v);
+        return ok ? '' : 'Недопустимые символы.';
+      }
+
+      function validateArtist() {
+        const v = fields.artist.value.trim();
+        if (v.length < 2) return 'Не короче 2 символов.';
+        const ok = /^[A-Za-zА-Яа-яЁё\s\-]+$/.test(v);
+        return ok ? '' : 'Только буквы, пробелы и дефисы.';
+      }
+
+      function validateGenre() {
+        return fields.genre.value ? '' : 'Выберите жанр.';
+      }
+
+      function validateYear() {
+        const v = fields.year.value.trim();
+        if (!/^\d+$/.test(v)) return 'Только целые числа.';
+        const n = parseInt(v, 10);
+        const current = new Date().getFullYear();
+        if (n < 1900 || n > current) return `Год в диапазоне 1900–${current}.`;
+        return '';
+      }
+
+      function validateDuration() {
+        const v = fields.duration.value.trim();
+        const m = v.match(/^([0-5]?\d):([0-5]\d)$/);
+        if (!m) return 'Формат ММ:СС (например, 03:45).';
+        const mm = parseInt(m[1], 10);
+        const ss = parseInt(m[2], 10);
+        const total = mm * 60 + ss;
+        if (total < 10) return 'Минимум 00:10.';
+        if (mm > 59) return 'Минуты от 00 до 59.';
+        return '';
+      }
+
+      function validateCover() {
+        const v = fields.cover.value.trim();
+        const ok = /^https:\/\/.+\.(jpg|jpeg|png|webp)$/i.test(v);
+        return ok ? '' : 'Укажите https-URL на .jpg/.jpeg/.png/.webp';
+      }
+
+      function normalizeISRC(s) {
+        return s.replace(/[\s\-]/g, '').toUpperCase();
+      }
+      function validateISRC() {
+        const norm = normalizeISRC(fields.isrc.value);
+        // 2 буквы, 3 буквы/цифры, 2 цифры, 5 цифр
+        const ok = /^[A-Z]{2}[A-Z0-9]{3}\d{2}\d{5}$/.test(norm);
+        return ok ? '' : 'Неверный ISRC. Пример: RUABC2500001.';
+      }
+
+      function validateEmail() {
+        const v = fields.email.value.trim();
+        const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) && 
+           !/^[^\s@]+\.@|@\.[^\s@]+$|\.$/.test(v);        
+        return ok ? '' : 'Некорректный email.';
+      }
+
+      const validators = {
+        title:    validateTitle,
+        artist:   validateArtist,
+        genre:    validateGenre,
+        year:     validateYear,
+        duration: validateDuration,
+        cover:    validateCover,
+        isrc:     validateISRC,
+        email:    validateEmail
+      };
+
+      // Живые подсказки
+      Object.entries(fields).forEach(([name, el]) => {
+        el.addEventListener('input', () => setError(name, validators[name]()));
+        if (el.tagName === 'SELECT') {
+          el.addEventListener('change', () => setError(name, validators[name]()));
+        }
+      });
+
+      function delayedReset() {
+        setTimeout(() => {
+            hideBanner();
+            form.reset();
+            Object.keys(errors).forEach(k => setError(k, ''));
+        }, 4000);
+      }
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        clearAll();
+
+        const results = Object.keys(validators).map(name => {
+            const msg = validators[name]();
+            setError(name, msg);
+            return { name, msg };
+        });
+
+        const firstBad = results.find(r => r.msg);
+        if (firstBad) {
+            showBanner('bad', 'Проверьте поля — есть ошибки ввода.');
+            fields[firstBad.name].focus();
+            return;
+        }
+
+        // Успех
+        showBanner('ok', 'Трек успешно добавлен в каталог.');
+        delayedReset();
+    });
+
+      // Очистка только при ручном сбросе формы
+      form.addEventListener('reset', () => {
+          setTimeout(() => {
+              Object.keys(errors).forEach(k => setError(k, ''));
+              hideBanner();
+          }, 0);
+      });
+    });
+  </script>
+</body>
+</html>
