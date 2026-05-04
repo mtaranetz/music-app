@@ -19,7 +19,10 @@
         <span class="brand-name">play it twice</span>
         <span class="brand-tag">музыкальный<br>сервис</span>
       </div>
-      <button class="search-btn" type="button">поиск по каталогу</button>
+    <div class="search">
+        <input type="text" id="searchInput" placeholder="Искать треки..." autocomplete="off">
+        <div id="suggestions" class="suggestions"></div> <!-- Блок для подсказок -->
+      </div>
     </header>
     <!-- Основной блок -->
     <main class="main">
@@ -152,6 +155,58 @@
       <button class="action" type="button">Работа с треком</button>
     </section>
   </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+  const searchInput = document.getElementById('searchInput');
+  const suggestionsContainer = document.getElementById('suggestions');
+
+  // Функция для обработки ввода в поле поиска
+  searchInput.addEventListener('input', function () {
+    const query = searchInput.value.trim();
+
+    if (query.length >= 3) { // Отправляем запрос только если длина запроса >= 3 символов
+      fetchSuggestions(query);
+    } else {
+      suggestionsContainer.style.display = 'none'; // Скрываем подсказки, если меньше 3 символов
+    }
+  });
+
+  // Функция для отправки запроса на сервер и получения подсказок
+  function fetchSuggestions(query) {
+    fetch(`http://localhost:5000/api/search/search?query=${query}`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.suggestions && data.suggestions.length > 0) {
+          renderSuggestions(data.suggestions);
+        } else {
+          suggestionsContainer.style.display = 'none'; // Скрываем, если нет подсказок
+        }
+      })
+      .catch(error => {
+        console.error('Ошибка при получении подсказок:', error);
+        suggestionsContainer.style.display = 'none'; // Скрываем, если ошибка
+      });
+  }
+
+  // Функция для отображения подсказок
+  function renderSuggestions(suggestions) {
+    suggestionsContainer.innerHTML = ''; // Очищаем предыдущие подсказки
+    suggestions.forEach(suggestion => {
+      const item = document.createElement('div');
+      item.classList.add('suggestion-item');
+      item.textContent = suggestion;
+      item.addEventListener('click', function () {
+        searchInput.value = suggestion; // Вставляем выбранную подсказку в поле поиска
+        suggestionsContainer.style.display = 'none'; // Скрываем подсказки
+        // Можно тут добавить логику для перехода по выбранной подсказке
+      });
+      suggestionsContainer.appendChild(item);
+    });
+    suggestionsContainer.style.display = 'block'; // Показываем подсказки
+  }
+});
+  </script>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {

@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\server-application",
+    "\\server-application\\MusicApp",
+    "\\server-application\\MusicApp\\Controllers",
+    "\\server-application\\MusicApp\\Models",
+    "\\server-application\\MusicApp\\wwwroot"
+  ],
+  "SelectedNode": "\\server-application\\MusicApp\\Controllers\\TrackController.cs",
+  "PreviewInSolutionExplorer": false
+}

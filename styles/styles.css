@@ -84,6 +84,27 @@ body{
   width: auto;
 }
 
+/* Стили для подсказок */
+.suggestions {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ccc;
+  width: 300px;
+  max-height: 200px;
+  overflow-y: auto;
+  display: none;
+  z-index: 1000;
+}
+
+.suggestion-item {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.suggestion-item:hover {
+  background-color: #f1f1f1;
+}
+
 .branding{
   display: flex;
   align-items: flex-start; /* все элементы прижимаются к верхнему краю */

@@ -1,0 +1,83 @@
+[
+  {
+    "title": "Лето",
+    "meta": "Чи-Ли · Преступление",
+    "image": "../../images/prestuplenie.jpg"
+  },
+  {
+    "title": "Где ты",
+    "meta": "Инфинити feat. D.I.P. Project · ГДЕ ТЫ",
+    "image": "../../images/gde_ti.jpg"
+  },
+  {
+    "title": "Веретено",
+    "meta": "Алиса · Танцевать",
+    "image": "../../images/tanc.jpg"
+  },
+  {
+    "title": "Can’t Get You Out Of My Head",
+    "meta": "Kylie Minogue · Fever",
+    "image": "../../images/cover-track.jpg"
+  },
+  {
+    "title": "Freestyler",
+    "meta": "Bomfunk MC's · In Stereo",
+    "image": "../../images/cover-track.jpg"
+  },
+  {
+    "title": "Believe",
+    "meta": "Cher · Believe",
+    "image": "../../images/cover-track.jpg"
+  },
+
+  {
+    "title": "Dragostea Din Tei",
+    "meta": "O-Zone · DiscO-Zone",
+    "image": "../../images/cover-track.jpg"
+  },
+  {
+    "title": "Hot N Cold",
+    "meta": "Katy Perry · One of the Boys",
+    "image": "../../images/cover-track.jpg"
+  },
+  {
+    "title": "Bad Romance",
+    "meta": "Lady Gaga · The Fame Monster",
+    "image": "../../images/the_fame_monster.jpg"
+  },
+  {
+    "title": "Call Me Maybe",
+    "meta": "Carly Rae Jepsen · Kiss",
+    "image": "../../images/cover-track.jpg"
+  },
+  {
+    "title": "Titanium",
+    "meta": "David Guetta feat. Sia · Nothing but the Beat",
+    "image": "../../images/cover-track.jpg"
+  },
+  {
+    "title": "Stereo Love",
+    "meta": "Edward Maya & Vika Jigulina · Stereo Love",
+    "image": "../../images/cover-track.jpg"
+  },
+  {
+    "title": "Wake Me Up",
+    "meta": "Avicii · True",
+    "image": "../../images/cover-track.jpg"
+  },
+  {
+    "title": "Shape of You",
+    "meta": "Ed Sheeran · Divide",
+    "image": "../../images/cover-track.jpg"
+  },
+  {
+    "title": "Blinding Lights",
+    "meta": "The Weeknd · After Hours",
+    "image": "../../images/cover-track.jpg"
+  },
+  {
+    "title": "Dance Monkey",
+    "meta": "Tones and I · The Kids Are Coming",
+    "image": "../../images/cover-track.jpg"
+  }
+]

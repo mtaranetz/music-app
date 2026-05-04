@@ -164,6 +164,71 @@
     </section>
   </div>
 
+
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('addTrackForm');
+  const banner = document.querySelector('.form-banner');
+
+  // Функция скрытия сообщения
+  function hideBanner() {
+    banner.classList.remove('show', 'ok', 'bad');
+    banner.textContent = '';
+  }
+
+  // Функция отображения сообщения
+  function showBanner(type, text) {
+    banner.textContent = text;
+    banner.classList.remove('ok', 'bad');
+    banner.classList.add(type === 'ok' ? 'ok' : 'bad', 'show');
+  }
+
+  // Обработчик формы
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault(); // Предотвратить стандартную отправку формы
+    hideBanner(); // Скрыть старые сообщения
+
+    // Собираем данные из формы
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    // Валидация формы
+    const isValid = validateForm(data); // Валидация (описана ниже)
+    if (!isValid) {
+      showBanner('bad', 'Проверьте поля — есть ошибки ввода.');
+      return;
+    }
+
+    // Отправка данных на сервер через AJAX (fetch)
+    try {
+      const response = await fetch('http://localhost:5000/api/track/addTrack', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data), 
+      });
+
+      console.log(JSON.stringify(data)); // Выводим в консоль, чтобы проверить
+
+
+      const result = await response.json();
+      if (response.ok) {
+        showBanner('ok', result.message); // Показываем сообщение об успехе
+      } else {
+        showBanner('bad', result.message || 'Произошла ошибка');
+      }
+    } catch (error) {
+      showBanner('bad', 'Ошибка при отправке данных на сервер');
+      console.error('Ошибка:', error);
+    }
+  });
+
+  // Простая валидация данных формы
+  function validateForm(data) {
+    return data.title && data.artist && data.genre && data.year && data.duration && data.image && data.isrc && data.email;
+  }
+});</script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // ==== Навигация сайдбара (как на главной) ====
@@ -232,7 +297,7 @@
         genre:    document.getElementById('genre'),
         year:     document.getElementById('year'),
         duration: document.getElementById('duration'),
-        cover:    document.getElementById('cover'),
+        image:    document.getElementById('cover'),
         isrc:     document.getElementById('isrc'),
         email:    document.getElementById('email')
       };
@@ -243,7 +308,7 @@
         genre:    document.getElementById('err-genre'),
         year:     document.getElementById('err-year'),
         duration: document.getElementById('err-duration'),
-        cover:    document.getElementById('err-cover'),
+        image:    document.getElementById('err-cover'),
         isrc:     document.getElementById('err-isrc'),
         email:    document.getElementById('err-email')
       };
@@ -300,7 +365,7 @@
       }
 
       function validateCover() {
-        const v = fields.cover.value.trim();
+        const v = fields.image.value.trim();
         const ok = /^https:\/\/.+\.(jpg|jpeg|png|webp)$/i.test(v);
         return ok ? '' : 'Укажите https-URL на .jpg/.jpeg/.png/.webp';
       }
@@ -328,7 +393,7 @@
         genre:    validateGenre,
         year:     validateYear,
         duration: validateDuration,
-        cover:    validateCover,
+        image:    validateCover,
         isrc:     validateISRC,
         email:    validateEmail
       };

@@ -42,11 +42,56 @@
         </div>
 
         <div class="filters" role="toolbar" aria-label="Фильтры новинок">
-          <button class="pill active" type="button">Все</button>
-          <button class="pill" type="button">Треки</button>
-          <button class="pill" type="button">Альбомы</button>
-          <button class="pill" type="button">За неделю</button>
-          <button class="pill" type="button">За месяц</button>
+          <label class="pill">
+          <span class="btn-text">Жанр</span>
+          <select class="pill-select" data-filter="Жанр">
+            <option value="">Сбросить фильтр</option>
+            <option>Рок</option>
+            <option>Поп</option>
+            <option>Электроника</option>
+            <option>Хип-хоп</option>
+            <option>Джаз</option>
+            <option>Инди</option>
+            <option>Техно</option>
+          </select>
+        </label>
+
+        <label class="pill">
+          <span class="btn-text">Год</span>
+          <select class="pill-select" data-filter="Год">
+            <option value="">Сбросить фильтр</option>
+            <option>2025</option>
+            <option>2024</option>
+            <option>2020–2023</option>
+            <option>2010–2019</option>
+            <option>До 2010</option>
+          </select>
+        </label>
+
+        <label class="pill">
+          <span class="btn-text">Артист</span>
+          <select class="pill-select" data-filter="Артист">
+            <option value="">Сбросить фильтр</option>
+            <option>Зоя Ященко</option>
+            <option>Белая Гвардия</option>
+            <option>Кино</option>
+            <option>Мумий Тролль</option>
+            <option>ДДТ</option>
+          </select>
+        </label>
+
+        <label class="pill">
+          <span class="btn-text">Страна</span>
+          <select class="pill-select" data-filter="Страна">
+            <option value="">Сбросить фильтр</option>
+            <option>Россия</option>
+            <option>Белоруссия</option>
+            <option>США</option>
+            <option>Великобритания</option>
+            <option>Германия</option>
+            <option>Франция</option>
+          </select>
+        </label>
         </div>
 
         <div class="new-releases">

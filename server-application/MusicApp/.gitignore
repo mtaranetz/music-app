@@ -1,0 +1,79 @@
+# =========================
+# BUILD
+# =========================
+bin/
+obj/
+out/
+publish/
+
+# =========================
+# USER / IDE
+# =========================
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider / VS Code
+.idea/
+.vscode/
+
+# =========================
+# OS
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# LOGS
+# =========================
+*.log
+
+# =========================
+# ENV / SECRETS
+# =========================
+.env
+.env.*
+appsettings.Development.json
+appsettings.Local.json
+
+# (если используешь секреты)
+secrets.json
+
+# =========================
+# NUGET
+# =========================
+*.nupkg
+packages/
+
+# =========================
+# NODE (если фронт рядом)
+# =========================
+node_modules/
+dist/
+build/
+
+# =========================
+# DOCKER
+# =========================
+docker-compose.override.yml
+
+# =========================
+# TEST RESULTS
+# =========================
+TestResults/
+coverage/
+
+# =========================
+# PUBLISH PROFILES
+# =========================
+*.pubxml
+*.publishproj
+
+# =========================
+# SQLITE / LOCAL DB (если вдруг)
+# =========================
+*.db
+*.sqlite
+*.sqlite3

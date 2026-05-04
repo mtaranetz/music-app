@@ -46,7 +46,7 @@
             </div>
 
             <!-- Треки -->
-            <div class="tracks">
+            <div class="tracks" id="tracksList">
                 <article class="track">
                     <div class="track__thumb">
                     <img src="../../images/the_fame_monster.jpg" alt="">
@@ -80,7 +80,7 @@
                     <button class="track__btn">Работа с треком</button>
                 </article>
 
-                <article class="track">
+                <!-- <article class="track">
                     <div class="track__thumb">
                     <img src="../../images/prestuplenie.jpg" alt="">
                     </div>
@@ -111,8 +111,9 @@
                     <div class="track__meta">Алиса · Танцевать</div>
                     </div>
                     <button class="track__btn">Работа с треком</button>
-                </article>
+                </article> -->
             </div>
+            <div id="scrollTrigger" style="height: 20px;"></div>
         </section>
     </main>
 </div>
@@ -137,29 +138,82 @@
     </section>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const miniPlayer = document.getElementById('miniPlayer');
+document.addEventListener('DOMContentLoaded', function() {
+  const miniPlayer = document.getElementById('miniPlayer');
+  const tracksList = document.getElementById('tracksList');
+  const trigger = document.getElementById('scrollTrigger');
+  const PAGE_SIZE = 3;
+  let currentPage = 1;
+  let isLoading = false;
+
+  // Функция для загрузки данных с сервера
+  async function loadTracksData(page) {
+    if (isLoading) return;  // Если уже идет загрузка, ничего не делаем
+    
+    isLoading = true;
+
+    try {
+      const response = await fetch(`http://localhost:5000/api/track/queue?page=${page}&pageSize=${PAGE_SIZE}`);
+      const data = await response.json();
       
-      // Обработчик клика на плеер
-      miniPlayer.addEventListener('click', function(e) {
-        // Проверяем, что клик не был на кнопке "Работа с треком"
-        if (!e.target.closest('.action')) {
-          openTrackCard();
-        }
+      // Добавляем треки в список
+      data.content.forEach(track => {
+        const article = createTrackElement(track);
+        tracksList.appendChild(article);
       });
-      
-      // Обработчик клика на кнопку "Работа с треком"
-      const actionButton = miniPlayer.querySelector('.action');
-      actionButton.addEventListener('click', function(e) {
-        e.stopPropagation(); 
-        console.log('Работа с треком');
-      });
-      
-      function openTrackCard() {
-        window.location.href = 'track-card.html';
+
+      // Если нет больше треков, отключаем observer
+      if (data.content.length < PAGE_SIZE) {
+        observer.disconnect();
+      }
+    } catch (error) {
+      console.error('Ошибка загрузки:', error);
+    }
+
+    isLoading = false;
+  }
+
+  function createTrackElement(track) {
+    const article = document.createElement('article');
+    article.className = 'track';
+
+    article.innerHTML = `
+      <div class="track__thumb">
+        <img src="${track.image}" alt="${track.title}">
+      </div>
+      <div class="track__info">
+        <h3 class="track__title">${track.title}</h3>
+        <div class="track__meta">${track.artist}</div>
+      </div>
+      <button class="track__btn" type="button">Работа с треком</button>
+    `;
+    
+    return article;
+  }
+
+  // Логика для подгрузки треков по скроллу с небольшой задержкой
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // Включаем задержку перед подгрузкой данных
+        setTimeout(() => {
+          currentPage++; // Увеличиваем страницу
+          loadTracksData(currentPage); // Загружаем данные для следующей страницы
+        }, 500); // Задержка 500 миллисекунд
       }
     });
-  </script>
+  }, {
+    root: null,
+    rootMargin: '100px 0px',  // 100px сверху и снизу от видимой области
+    threshold: 0.5  // Срабатывает, когда 50% элемента видимо
+  });
+
+  observer.observe(trigger);
+
+  // Загружаем первые треки при старте
+  loadTracksData(currentPage);
+});
+</script>
 
 </body>
 </html>
