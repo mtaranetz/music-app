@@ -68,16 +68,9 @@
           </select>
         </label>
 
-        <label class="pill">
-          <span class="btn-text">Артист</span>
-          <select class="pill-select" data-filter="Артист">
-            <option value="">Сбросить фильтр</option>
-            <option>The Weeknd</option>
-            <option>Dua Lipa</option>
-            <option>Eminem</option>
-            <option>Imagine Dragons</option>
-          </select>
-        </label>
+        <select class="pill-select" data-filter="Артист" id="artistSelect">
+          <option value="">Сбросить фильтр</option>
+        </select>
 
         <label class="pill">
           <span class="btn-text">Страна</span>
@@ -231,6 +224,7 @@
       const miniPlayer = document.getElementById("miniPlayer");
       const actionButton = miniPlayer.querySelector(".action");
 
+      loadArtists();
       loadTracks();
 
       document.querySelectorAll(".pill-select").forEach(select => {
@@ -345,6 +339,35 @@
 
         container.appendChild(card);
       });
+    }
+
+    async function loadArtists() {
+      const artistSelect = document.getElementById("artistSelect");
+
+      if (!artistSelect) {
+        console.error("Не найден select #artistSelect");
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_URL}/artists`);
+
+        if (!response.ok) {
+          throw new Error("Ошибка API артистов: " + response.status);
+        }
+
+        const artists = await response.json();
+
+        artists.forEach(artist => {
+          const option = document.createElement("option");
+          option.value = artist;
+          option.textContent = artist;
+          artistSelect.appendChild(option);
+        });
+
+      } catch (error) {
+        console.error("Не удалось загрузить артистов:", error);
+      }
     }
     </script>
 

@@ -174,7 +174,7 @@
 
   // Функция для отправки запроса на сервер и получения подсказок
   function fetchSuggestions(query) {
-    fetch(`http://localhost:5000/api/search/search?query=${query}`)
+    fetch(`http://music-app-server-117v.onrender.com/api/search/search?query=${query}`)
       .then(response => response.json())
       .then(data => {
         if (data.suggestions && data.suggestions.length > 0) {

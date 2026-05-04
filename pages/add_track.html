@@ -301,11 +301,11 @@
         return '';
       }
 
-      function validateCover() {
-        const v = fields.image.value.trim();
-        const ok = /^https:\/\/.+\.(jpg|jpeg|png|webp)$/i.test(v);
-        return ok ? '' : 'Укажите https-URL на .jpg/.jpeg/.png/.webp';
-      }
+      // function validateCover() {
+      //   const v = fields.image.value.trim();
+      //   const ok = /^https:\/\/.+\.(jpg|jpeg|png|webp)$/i.test(v);
+      //   return ok ? '' : 'Укажите https-URL на .jpg/.jpeg/.png/.webp';
+      // }
 
       function normalizeISRC(s) {
         return s.replace(/[\s\-]/g, '').toUpperCase();
@@ -330,7 +330,7 @@
         genre:    validateGenre,
         year:     validateYear,
         duration: validateDuration,
-        image:    validateCover,
+        //image:    validateCover,
         isrc:     validateISRC,
         email:    validateEmail
       };
@@ -381,7 +381,7 @@
   };
 
   try {
-    const response = await fetch('http://localhost:5000/api/tracks/addTrack', {
+    const response = await fetch('https://music-app-server-117v.onrender.com/api/tracks/addTrack', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -396,7 +396,7 @@
       return;
     }
 
-    showBanner('ok', result.message || 'Трек успешно добавлен в каталог.');
+    showBanner('ok', 'Трек успешно добавлен в каталог.');
     delayedReset();
 
   } catch (error) {

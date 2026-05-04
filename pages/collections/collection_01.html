@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function() {
     isLoading = true;
 
     try {
-      const response = await fetch(`http://localhost:5000/api/track/queue?page=${page}&pageSize=${PAGE_SIZE}`);
+      const response = await fetch(`http://music-app-server-117v.onrender.com/api/track/queue?page=${page}&pageSize=${PAGE_SIZE}`);
       const data = await response.json();
       
       // Добавляем треки в список

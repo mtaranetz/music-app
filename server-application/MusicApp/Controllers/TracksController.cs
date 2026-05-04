@@ -142,6 +142,19 @@ namespace CatalogApp.Controllers
             return Ok(track);
         }
 
+        [HttpGet("artists")]
+        public async Task<IActionResult> GetArtists()
+        {
+            var artists = await _context.Tracks
+                .Where(t => !string.IsNullOrWhiteSpace(t.Artist))
+                .Select(t => t.Artist)
+                .Distinct()
+                .OrderBy(a => a)
+                .ToListAsync();
+
+            return Ok(artists);
+        }
+
 
     }
 }
