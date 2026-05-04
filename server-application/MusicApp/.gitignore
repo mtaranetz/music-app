@@ -10,7 +10,7 @@ publish/
 # USER / IDE
 # =========================
 .vs/
-*.user
+*.user 
 *.suo
 *.userosscache
 *.sln.docstates

@@ -15,15 +15,14 @@ namespace CatalogApp.Controllers
         private readonly ILogger<TracksController> _logger;
         private readonly ApplicationDbContext _context;
 
-        public TracksController(ApplicationDbContext context)
+        public TracksController(
+            ApplicationDbContext context,
+            ILogger<TracksController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
-        public TracksController(ILogger<TracksController> logger)
-        {
-            _logger = logger; 
-        }
         private static readonly List<Track> trackData = new List<Track>
         {
             new Track { Id = 1, Title = "Твоими нитями", Artist = "Зоя Ященко, Белая Гвардия · Венеция", Image = "http://localhost:5000/images/semeinoe_photo_zoya_yachenko.jpg" },
