@@ -68,20 +68,17 @@
           </select>
         </label>
 
-        <select class="pill-select" data-filter="Артист" id="artistSelect">
-          <option value="">Сбросить фильтр</option>
-        </select>
+        <label class="pill">
+          <span class="btn-text">Артист</span>
+          <select class="pill-select" data-filter="Артист" id="artistSelect">
+            <option value="">Сбросить фильтр</option>
+          </select>
+        </label>
 
         <label class="pill">
           <span class="btn-text">Страна</span>
-          <select class="pill-select" data-filter="Страна">
+          <select class="pill-select" data-filter="Страна" id="countrySelect">
             <option value="">Сбросить фильтр</option>
-            <option>Россия</option>
-            <option>Белоруссия</option>
-            <option>США</option>
-            <option>Великобритания</option>
-            <option>Германия</option>
-            <option>Франция</option>
           </select>
         </label>
         </div>
@@ -226,6 +223,7 @@
 
       loadArtists();
       loadTracks();
+      loadTracks();
 
       document.querySelectorAll(".pill-select").forEach(select => {
         select.addEventListener("change", function () {
@@ -367,6 +365,35 @@
 
       } catch (error) {
         console.error("Не удалось загрузить артистов:", error);
+      }
+    }
+
+    async function loadCountries() {
+      const countrySelect = document.getElementById("countrySelect");
+
+      if (!countrySelect) {
+        console.error("Не найден select #countrySelect");
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_URL}/countries`);
+
+        if (!response.ok) {
+          throw new Error("Ошибка API стран: " + response.status);
+        }
+
+        const countries = await response.json();
+
+        countries.forEach(country => {
+          const option = document.createElement("option");
+          option.value = country;
+          option.textContent = country;
+          countrySelect.appendChild(option);
+        });
+
+      } catch (error) {
+        console.error("Не удалось загрузить страны:", error);
       }
     }
     </script>

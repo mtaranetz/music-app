@@ -155,6 +155,21 @@ namespace CatalogApp.Controllers
             return Ok(artists);
         }
 
+        [HttpGet("countries")]
+        public async Task<IActionResult> GetCountries()
+        {
+            var countries = await _context.Tracks
+                .Where(t => !string.IsNullOrWhiteSpace(t.Country))
+                .Select(t => t.Country)
+                .Distinct()
+                .OrderBy(c => c)
+                .ToListAsync();
+
+            return Ok(countries);
+        }
+
 
     }
+
+
 }
