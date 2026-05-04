@@ -54,24 +54,28 @@ namespace CatalogApp.Controllers
 
         // POST: api/track/addTrack
         [HttpPost("addTrack")]
-        public IActionResult AddTrack([FromBody] Track track)
+        public async Task<IActionResult> AddTrack([FromBody] Track track)
         {
             if (track == null)
-            {
-                _logger.LogWarning("Получен пустой запрос на добавление трека");
                 return BadRequest(new { message = "Недопустимые данные" });
-            }
 
-            if (string.IsNullOrEmpty(track.Title))
-            {
-                _logger.LogWarning("Отсутствует название трека");
+            if (string.IsNullOrWhiteSpace(track.Title))
                 return BadRequest(new { message = "Название трека обязательно" });
-            }
 
-            // Логирование успешного добавления трека
-            _logger.LogInformation("Трек добавлен: {Title} от {Artist}", track.Title, track.Artist);
+            if (string.IsNullOrWhiteSpace(track.Artist))
+                return BadRequest(new { message = "Артист обязателен" });
 
-            return Ok(new { message = "Трек успешно добавлен в каталог!" });
+            if (string.IsNullOrWhiteSpace(track.Country))
+                track.Country = "Россия";
+
+            _context.Tracks.Add(track);
+            await _context.SaveChangesAsync();
+
+            return Ok(new
+            {
+                message = "Трек успешно добавлен в каталог!",
+                track
+            });
         }
 
         [HttpGet]
