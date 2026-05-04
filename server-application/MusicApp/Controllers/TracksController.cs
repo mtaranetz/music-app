@@ -92,21 +92,15 @@ namespace CatalogApp.Controllers
             {
                 if (year == "2020-2023")
                 {
-                    query = query.Where(t =>
-                        t.Year == "2020" ||
-                        t.Year == "2021" ||
-                        t.Year == "2022" ||
-                        t.Year == "2023");
+                    query = query.Where(t => t.Year.CompareTo("2020") >= 0 && t.Year.CompareTo("2023") <= 0);
                 }
                 else if (year == "2010-2019")
                 {
-                    query = query.Where(t =>
-                        string.Compare(t.Year, "2010") >= 0 &&
-                        string.Compare(t.Year, "2019") <= 0);
+                    query = query.Where(t => t.Year.CompareTo("2010") >= 0 && t.Year.CompareTo("2019") <= 0);
                 }
-                else if (year == "До 2010")
+                else if (year == "before-2010")
                 {
-                    query = query.Where(t => string.Compare(t.Year, "2010") < 0);
+                    query = query.Where(t => t.Year.CompareTo("2010") < 0);
                 }
                 else
                 {
