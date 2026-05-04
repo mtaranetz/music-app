@@ -62,8 +62,8 @@
             <option value="">Сбросить фильтр</option>
             <option>2025</option>
             <option>2024</option>
-            <option>2020–2023</option>
-            <option>2010–2019</option>
+            <option>2020-2023</option>
+            <option>2010-2019</option>
             <option>До 2010</option>
           </select>
         </label>
@@ -94,8 +94,8 @@
         </label>
         </div>
 
-        <div class="new-releases">
-          <div class="release-card" data-track="1">
+        <div class="new-releases" id="tracksContainer">
+          <!-- <div class="release-card" data-track="1">
             <img src="../images/mood-chill.jpg" alt="Обложка альбома" class="release-cover">
             <div class="release-title">Весенний дождь</div>
             <div class="release-artist">Анна Петрова</div>
@@ -103,60 +103,60 @@
           </div>
           
           <!-- Новинка 2 -->
-          <div class="release-card" data-track="2">
+          <!-- <div class="release-card" data-track="2">
             <img src="../images/mood-dance.jpg" alt="Обложка альбома" class="release-cover">
             <div class="release-title">Городские огни</div>
             <div class="release-artist">Электронные призраки</div>
             <div class="release-date">Вчера</div>
-          </div>
+          </div> -->
           
           <!-- Новинка 3 -->
-          <div class="release-card" data-track="3">
+          <!-- <div class="release-card" data-track="3">
             <img src="../images/mood-top10.jpg" alt="Обложка альбома" class="release-cover">
             <div class="release-title">Лунная соната</div>
             <div class="release-artist">Сергей Орлов</div>
             <div class="release-date">2 дня назад</div>
-          </div>
+          </div> -->
           
           <!-- Новинка 4 -->
-          <div class="release-card" data-track="4">
+          <!-- <div class="release-card" data-track="4">
             <img src="../images/mood-techno.jpg" alt="Обложка альбома" class="release-cover">
             <div class="release-title">Океан внутри</div>
             <div class="release-artist">Марина Синяя</div>
             <div class="release-date">3 дня назад</div>
-          </div>
+          </div> -->
           
           <!-- Новинка 5 -->
-          <div class="release-card" data-track="5">
+          <!-- <div class="release-card" data-track="5">
             <img src="../images/mood-walk.jpg" alt="Обложка альбома" class="release-cover">
             <div class="release-title">Бесконечное лето</div>
             <div class="release-artist">Солнечные люди</div>
             <div class="release-date">4 дня назад</div>
-          </div>
+          </div> -->
           
           <!-- Новинка 6 -->
-          <div class="release-card" data-track="6">
+          <!-- <div class="release-card" data-track="6">
             <img src="../images/mood-top100.jpg" alt="Обложка альбома" class="release-cover">
             <div class="release-title">Тишина между слов</div>
             <div class="release-artist">Алексей Воронов</div>
             <div class="release-date">5 дней назад</div>
-          </div>
+          </div> -->
           
           <!-- Новинка 7 -->
-          <div class="release-card" data-track="7">
+          <!-- <div class="release-card" data-track="7">
             <img src="../images/mood-top25.jpg" alt="Обложка альбома" class="release-cover">
             <div class="release-title">Улицы без имен</div>
             <div class="release-artist">Городской джаз</div>
             <div class="release-date">6 дней назад</div>
-          </div>
+          </div> -->
           
           <!-- Новинка 8 -->
-          <div class="release-card" data-track="8">
+          <!-- <div class="release-card" data-track="8">
             <img src="../images/mood-rap.jpg" alt="Обложка альбома" class="release-cover">
             <div class="release-title">Последний поезд</div>
             <div class="release-artist">Ночные голоса</div>
             <div class="release-date">Неделю назад</div>
-          </div>
+          </div> --> 
         </div>
 
         <!-- Популярные новинки -->
@@ -165,7 +165,7 @@
           <a href="#" class="view-all">Смотреть все →</a>
         </div>
 
-        <div class="new-releases">
+        <div class="new-releases" id="popularTracksContainer">
           <!-- Популярная новинка 1 -->
           <div class="release-card" data-track="9">
             <img src="../images/semeinoe_photo_zoya_yachenko.jpg" alt="Обложка альбома" class="release-cover">
@@ -218,68 +218,136 @@
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const miniPlayer = document.getElementById('miniPlayer');
-      const releaseCards = document.querySelectorAll('.release-card');
-      const filterPills = document.querySelectorAll('.filters .pill');
-      
-      // Обработчик клика на плеер
-      miniPlayer.addEventListener('click', function(e) {
-        if (!e.target.closest('.action')) {
-          openTrackCard();
+    const API_URL = "https://music-app-server-117v.onrender.com/api/tracks";
+
+    function getCoverUrl(track) {
+      if (!track.image) {
+        return "../images/logo.png";
+      }
+
+      return `../images/${track.image}`;
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const miniPlayer = document.getElementById("miniPlayer");
+      const actionButton = miniPlayer.querySelector(".action");
+
+      loadTracks();
+
+      document.querySelectorAll(".pill-select").forEach(select => {
+        select.addEventListener("change", function () {
+          const pill = this.closest(".pill");
+          const text = pill.querySelector(".btn-text");
+
+          text.textContent = this.value || this.dataset.filter;
+
+          document.querySelectorAll(".filters .pill").forEach(p => {
+            p.classList.remove("active");
+          });
+
+          if (this.value) {
+            pill.classList.add("active");
+          }
+
+          loadTracks();
+        });
+      });
+
+      miniPlayer.addEventListener("click", function (e) {
+        if (!e.target.closest(".action")) {
+          window.location.href = "../pages/track-card.html";
         }
       });
-      
-      // Обработчик клика на кнопку "Работа с треком"
-      const actionButton = miniPlayer.querySelector('.action');
-      actionButton.addEventListener('click', function(e) {
-        e.stopPropagation(); 
-        console.log('Работа с треком');
+
+      actionButton.addEventListener("click", function (e) {
+        e.stopPropagation();
+        console.log("Работа с треком");
       });
-      
-      // Обработчик клика на карточки новинок
-      releaseCards.forEach(card => {
-        card.addEventListener('click', function() {
-          const trackId = this.getAttribute('data-track');
-          openTrackCard(trackId);
-        });
-      });
-      
-      // Обработчик фильтров
-      filterPills.forEach(pill => {
-        pill.addEventListener('click', function() {
-          filterPills.forEach(p => p.classList.remove('active'));
-          this.classList.add('active');
-          // Здесь можно добавить логику фильтрации
-          console.log('Фильтр изменен:', this.textContent);
-        });
-      });
-      
-      // Обработчик кнопок сайдбара
-      const sidebarButtons = document.querySelectorAll('.sb-btn');
-      sidebarButtons.forEach(button => {
-        button.addEventListener('click', function() {
-          if (this.textContent === 'Главная') {
-            window.location.href = '../index.html';
-          }
-          if (this.textContent === 'Новинки') {
-            window.location.href = '../pages/new_albums.html';
-          }
-          if (this.textContent === 'Артисты') {
-            window.location.href = '../pages/artists.html';
-          }
-          if (this.textContent === 'Добавить трек') {
-            window.location.href = '../pages/add_track.html';
+
+      document.querySelectorAll(".sb-btn").forEach(button => {
+        button.addEventListener("click", function () {
+          const text = this.textContent.trim();
+
+          if (text === "Главная") {
+            window.location.href = "../index.html";
+          } else if (text === "Новинки") {
+            window.location.href = "../pages/new_albums.html";
+          } else if (text === "Артисты") {
+            window.location.href = "../pages/artists.html";
+          } else if (text === "Добавить трек") {
+            window.location.href = "../pages/add_track.html";
           }
         });
       });
-      
-      function openTrackCard(trackId = null) {
-        const url = trackId ? `..pages/track-card.html?track=${trackId}` : '..track-card.html';
-        window.location.href = url;
-      }
     });
-  </script>
+
+    async function loadTracks() {
+      const genre = document.querySelector('[data-filter="Жанр"]').value;
+      const year = document.querySelector('[data-filter="Год"]').value;
+      const artist = document.querySelector('[data-filter="Артист"]').value;
+      const country = document.querySelector('[data-filter="Страна"]').value;
+
+      const params = new URLSearchParams();
+
+      if (genre) params.append("genre", genre);
+      if (year) params.append("year", year);
+      if (artist) params.append("artist", artist);
+      if (country) params.append("country", country);
+
+      const container = document.getElementById("tracksContainer");
+
+      if (!container) {
+        console.error("Не найден контейнер #tracksContainer");
+        return;
+      }
+
+      container.innerHTML = "<p>Загрузка...</p>";
+
+      try {
+        const response = await fetch(`${API_URL}?${params.toString()}`);
+
+        if (!response.ok) {
+          throw new Error("Ошибка API: " + response.status);
+        }
+
+        const tracks = await response.json();
+        renderTracks(tracks);
+
+      } catch (error) {
+        console.error(error);
+        container.innerHTML = "<p>Не удалось загрузить треки.</p>";
+      }
+    }
+
+    function renderTracks(tracks) {
+      const container = document.getElementById("tracksContainer");
+      container.innerHTML = "";
+
+      if (!tracks || !tracks.length) {
+        container.innerHTML = "<p>По выбранным фильтрам ничего не найдено.</p>";
+        return;
+      }
+
+      tracks.forEach(track => {
+        const card = document.createElement("div");
+        card.className = "release-card";
+        card.dataset.track = track.id;
+
+        card.innerHTML = `
+          <img src="${getCoverUrl(track)}" alt="Обложка ${track.title}" class="release-cover">
+          <div class="release-title">${track.title || "Без названия"}</div>
+          <div class="release-artist">${track.artist || "Неизвестный артист"}</div>
+          <div class="release-date">${track.year || ""}</div>
+        `;
+
+        card.addEventListener("click", function () {
+          window.location.href = `../pages/track-card.html?track=${track.id}`;
+        });
+
+        container.appendChild(card);
+      });
+    }
+    </script>
 
 </body>
 </html>

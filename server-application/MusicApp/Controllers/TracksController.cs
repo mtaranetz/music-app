@@ -90,7 +90,7 @@ namespace CatalogApp.Controllers
 
             if (!string.IsNullOrWhiteSpace(year))
             {
-                if (year == "2020–2023")
+                if (year == "2020-2023")
                 {
                     query = query.Where(t =>
                         t.Year == "2020" ||
@@ -98,7 +98,7 @@ namespace CatalogApp.Controllers
                         t.Year == "2022" ||
                         t.Year == "2023");
                 }
-                else if (year == "2010–2019")
+                else if (year == "2010-2019")
                 {
                     query = query.Where(t =>
                         string.Compare(t.Year, "2010") >= 0 &&
