@@ -137,5 +137,46 @@ namespace CatalogApp.Controllers
 
             return Ok(new { message = "Трек удалён из плейлиста" });
         }
+
+        [HttpGet("{id}/tracks")]
+        public async Task<IActionResult> GetPlaylistTracks(
+            int id,
+            int page = 1,
+            int pageSize = 5)
+        {
+            if (page < 1) page = 1;
+            if (pageSize < 1) pageSize = 5;
+
+            var playlistExists = await _context.Playlists.AnyAsync(p => p.Id == id);
+
+            if (!playlistExists)
+                return NotFound(new { message = "Плейлист не найден" });
+
+            var tracks = await _context.PlaylistTracks
+                .Where(pt => pt.PlaylistId == id)
+                .OrderBy(pt => pt.Position)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Select(pt => new
+                {
+                    pt.Track.Id,
+                    pt.Track.Title,
+                    pt.Track.Artist,
+                    pt.Track.Image,
+                    pt.Track.Genre,
+                    pt.Track.Year,
+                    pt.Track.Country,
+                    pt.Track.Duration,
+                    pt.Position
+                })
+                .ToListAsync();
+
+            return Ok(new
+            {
+                page,
+                pageSize,
+                content = tracks
+            });
+        }
     }
 }
