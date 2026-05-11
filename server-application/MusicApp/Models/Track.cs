@@ -1,4 +1,4 @@
-namespace CatalogApp.Models
+﻿namespace CatalogApp.Models
 {
     public class Track
     {
@@ -13,6 +13,7 @@ namespace CatalogApp.Models
         public string Duration { get; set; } = "";
         public string Isrc { get; set; } = "";
         public string Email { get; set; } = "";
+        public string? Lyrics { get; set; }
 
         public List<PlaylistTrack> PlaylistTracks { get; set; } = new();
     }

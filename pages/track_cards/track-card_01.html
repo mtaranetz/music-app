@@ -153,7 +153,8 @@
       container.innerHTML = "<p>Загрузка текста...</p>";
 
       try {
-        const response = await fetch(`${TRACKS_API}/lyrics`);
+        const trackId = getTrackId();
+        const response = await fetch(`${TRACKS_API}/${trackId}/lyrics`);
 
         if (!response.ok) {
           throw new Error("Не удалось загрузить текст");
@@ -172,7 +173,8 @@
       container.innerHTML = "<p>Загрузка очереди...</p>";
 
       try {
-        const response = await fetch(`${TRACKS_API}/queue`);
+        const trackId = getTrackId();
+        const response = await fetch(`${TRACKS_API}/${trackId}/queue`);
 
         if (!response.ok) {
           throw new Error("Не удалось загрузить очередь");
