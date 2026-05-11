@@ -7,6 +7,7 @@
         <title>play it twice — артисты</title>
         <link rel="stylesheet" href="../styles/styles.css">
         <link rel="stylesheet" href="../styles/artists.css">
+        <script src="../scripts/common.js"></script>
 
     </head>
     <body>  
@@ -20,7 +21,10 @@
             <span class="brand-name">play it twice</span>
             <span class="brand-tag">музыкальный<br>сервис</span>
             </div>
-            <button class="search-btn" type="button">поиск по каталогу</button>
+            <div class="search">
+                <input type="text" id="searchInput" placeholder="Искать треки..." autocomplete="off">
+                <div id="suggestions" class="suggestions"></div>
+            </div>
         </header>
 
         <!-- Основной блок -->
@@ -182,36 +186,7 @@
 
         <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const miniPlayer = document.getElementById('miniPlayer');
-            const artistCards = document.querySelectorAll('.artist-card');
-            const filterPills = document.querySelectorAll('.filters .pill');
-            const letterButtons = document.querySelectorAll('.letter-btn');
-            const searchInput = document.querySelector('.search-artists');
-
-            const sidebarButtons = document.querySelectorAll('.sb-btn');
-            sidebarButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                if (this.textContent === 'Главная') {
-                    window.location.href = '../index.html';
-                }
-                if (this.textContent === 'Новинки') {
-                    window.location.href = '../pages/new_albums.html';
-                }
-                if (this.textContent === 'Артисты') {
-                    window.location.href = '../pages/artists.html';
-                }
-                if (this.textContent === 'Добавить трек') {
-                    window.location.href = '../pages/add_track.html';
-                }
-                });
-            });
             
-            // Обработчик клика на плеер
-            miniPlayer.addEventListener('click', function(e) {
-            if (!e.target.closest('.action')) {
-                openTrackCard();
-            }
-            });
             
             // Обработчик клика на кнопку "Работа с треком"
             const actionButton = miniPlayer.querySelector('.action');

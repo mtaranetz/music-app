@@ -7,6 +7,7 @@
   <title>play it twice — добавить трек</title>
   <link rel="stylesheet" href="../styles/styles.css">
   <link rel="stylesheet" href="../styles/add_track.css">
+  <script src="../scripts/common.js"></script>
 
 </head>
 <body>
@@ -20,7 +21,10 @@
         <span class="brand-name">play it twice</span>
         <span class="brand-tag">музыкальный<br>сервис</span>
       </div>
-      <button class="search-btn" type="button">поиск по каталогу</button>
+    <div class="search">
+      <input type="text" id="searchInput" placeholder="Искать треки..." autocomplete="off">
+      <div id="suggestions" class="suggestions"></div>
+    </div>
     </header>
 
     <!-- Основной блок -->
@@ -168,51 +172,6 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // ==== Навигация сайдбара (как на главной) ====
-      const sidebarButtons = document.querySelectorAll('.sb-btn');
-      sidebarButtons.forEach(btn => {
-        btn.addEventListener('click', function() {
-          const t = this.textContent.trim();
-          if (t === 'Главная') window.location.href = '../index.html';
-          if (t === 'Новинки') window.location.href = '../pages/new_albums.html';
-          if (t === 'Артисты') window.location.href = '../pages/artists.html';
-          if (t === 'Добавить трек') window.location.href = '../pages/add_track.html';
-        });
-      });
-
-      // ==== Клик-промотка мини-плеера (из главной) ====
-      const miniPlayer = document.getElementById('miniPlayer');
-      const progWrap = miniPlayer.querySelector('.progress');
-      const progBar  = miniPlayer.querySelector('.progress-bar');
-      const timeBox  = miniPlayer.querySelector('.time');
-      const timeCurNode = timeBox.firstChild;
-
-      progWrap.addEventListener('click', (e) => {
-        const rect = progWrap.getBoundingClientRect();
-        const x = Math.min(Math.max(e.clientX - rect.left, 0), rect.width);
-        const ratio = rect.width ? x / rect.width : 0;
-        progBar.style.width = (ratio * 100) + '%';
-        const a = (typeof audio !== 'undefined') ? audio : window.audio;
-        if (a && isFinite(a.duration) && a.duration > 0) {
-          a.currentTime = ratio * a.duration;
-          if (timeCurNode && timeCurNode.nodeType === Node.TEXT_NODE) {
-            const mm = String(Math.floor(a.currentTime / 60)).padStart(2, '0');
-            const ss = String(Math.floor(a.currentTime % 60)).padStart(2, '0');
-            timeCurNode.textContent = mm + ':' + ss;
-          }
-        }
-      });
-
-      miniPlayer.addEventListener('click', (e) => {
-        if (!e.target.closest('.action') && !e.target.closest('.progress')) {
-          window.location.href = '/pages/track_cards/track-card_01.html';
-        }
-      });
-      miniPlayer.querySelector('.action').addEventListener('click', (e) => {
-        e.stopPropagation();
-        console.log('Работа с треком');
-      });
-
       // ==== Валидация формы добавления ====
       
         const form = document.getElementById('addTrackForm');

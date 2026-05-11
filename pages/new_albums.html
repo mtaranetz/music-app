@@ -7,6 +7,7 @@
   <title>play it twice — новинки</title>
   <link rel="stylesheet" href="../styles/styles.css">
   <link rel="stylesheet" href="../styles/new_albums.css">
+  <script src="../scripts/common.js"></script>
 
 </head>
 <body>
@@ -21,7 +22,10 @@
         <span class="brand-name">play it twice</span>
         <span class="brand-tag">музыкальный<br>сервис</span>
       </div>
-      <button class="search-btn" type="button">поиск по каталогу</button>
+      <div class="search">
+        <input type="text" id="searchInput" placeholder="Искать треки..." autocomplete="off">
+        <div id="suggestions" class="suggestions"></div>
+      </div>
     </header>
     
     <!-- Основной блок -->
@@ -206,197 +210,145 @@
     </section>
   </div>
 
-  <script>
-    const API_URL = "https://music-app-server-117v.onrender.com/api/tracks";
+<script>
+const API_URL = "https://music-app-server-117v.onrender.com/api/tracks";
 
-    function getCoverUrl(track) {
-      if (!track.image) {
-        return "../images/logo.png";
+function getCoverUrl(track) {
+  if (!track.image) return "../images/logo.png";
+
+  if (track.image.startsWith("http")) {
+    return track.image;
+  }
+
+  return `../images/${track.image}`;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadArtists();
+  loadCountries();
+  loadTracks();
+
+  document.querySelectorAll(".pill-select").forEach(select => {
+    select.addEventListener("change", () => {
+      const pill = select.closest(".pill");
+      const text = pill.querySelector(".btn-text");
+
+      text.textContent = select.value || select.dataset.filter;
+
+      if (select.value) {
+        pill.classList.add("active");
+      } else {
+        pill.classList.remove("active");
       }
 
-      return `../images/${track.image}`;
+      loadTracks();
+    });
+  });
+
+  document.querySelectorAll("#popularTracksContainer .release-card").forEach(card => {
+    card.addEventListener("click", () => {
+      const trackId = card.dataset.track;
+      window.location.href = `../pages/track_cards/track-card_01.html?track=${trackId}`;
+    });
+  });
+});
+
+async function loadTracks() {
+  const genre = document.querySelector('[data-filter="Жанр"]').value;
+  const year = document.querySelector('[data-filter="Год"]').value;
+  const artist = document.querySelector('[data-filter="Артист"]').value;
+  const country = document.querySelector('[data-filter="Страна"]').value;
+
+  const params = new URLSearchParams();
+
+  if (genre) params.append("genre", genre);
+  if (year) params.append("year", year);
+  if (artist) params.append("artist", artist);
+  if (country) params.append("country", country);
+
+  const container = document.getElementById("tracksContainer");
+  container.innerHTML = "<p>Загрузка...</p>";
+
+  try {
+    const response = await fetch(`${API_URL}?${params.toString()}`);
+
+    if (!response.ok) {
+      throw new Error("Ошибка API: " + response.status);
     }
 
-    document.addEventListener("DOMContentLoaded", function () {
-      const miniPlayer = document.getElementById("miniPlayer");
-      const actionButton = miniPlayer.querySelector(".action");
+    const tracks = await response.json();
+    renderTracks(tracks);
+  } catch (error) {
+    console.error(error);
+    container.innerHTML = "<p>Не удалось загрузить треки.</p>";
+  }
+}
 
-      loadArtists();
-      loadTracks();
-      loadTracks();
+function renderTracks(tracks) {
+  const container = document.getElementById("tracksContainer");
+  container.innerHTML = "";
 
-      document.querySelectorAll(".pill-select").forEach(select => {
-        select.addEventListener("change", function () {
-          const pill = this.closest(".pill");
-          const text = pill.querySelector(".btn-text");
+  if (!tracks || !tracks.length) {
+    container.innerHTML = "<p>По выбранным фильтрам ничего не найдено.</p>";
+    return;
+  }
 
-          text.textContent = this.value || this.dataset.filter;
+  tracks.forEach(track => {
+    const card = document.createElement("div");
+    card.className = "release-card";
+    card.dataset.track = track.id;
 
-          document.querySelectorAll(".filters .pill").forEach(p => {
-            p.classList.remove("active");
-          });
+    card.innerHTML = `
+      <img src="${getCoverUrl(track)}" alt="Обложка ${track.title}" class="release-cover">
+      <div class="release-title">${track.title || "Без названия"}</div>
+      <div class="release-artist">${track.artist || "Неизвестный артист"}</div>
+      <div class="release-date">${track.year || ""}</div>
+    `;
 
-          if (this.value) {
-            pill.classList.add("active");
-          }
-
-          loadTracks();
-        });
-      });
-
-      miniPlayer.addEventListener("click", function (e) {
-        if (!e.target.closest(".action")) {
-          window.location.href = "../pages/track-card.html";
-        }
-      });
-
-      actionButton.addEventListener("click", function (e) {
-        e.stopPropagation();
-        console.log("Работа с треком");
-      });
-
-      document.querySelectorAll(".sb-btn").forEach(button => {
-        button.addEventListener("click", function () {
-          const text = this.textContent.trim();
-
-          if (text === "Главная") {
-            window.location.href = "../index.html";
-          } else if (text === "Новинки") {
-            window.location.href = "../pages/new_albums.html";
-          } else if (text === "Артисты") {
-            window.location.href = "../pages/artists.html";
-          } else if (text === "Добавить трек") {
-            window.location.href = "../pages/add_track.html";
-          }
-        });
-      });
+    card.addEventListener("click", () => {
+      window.location.href = `../pages/track_cards/track-card_01.html?track=${track.id}`;
     });
 
-    async function loadTracks() {
-      const genre = document.querySelector('[data-filter="Жанр"]').value;
-      const year = document.querySelector('[data-filter="Год"]').value;
-      const artist = document.querySelector('[data-filter="Артист"]').value;
-      const country = document.querySelector('[data-filter="Страна"]').value;
+    container.appendChild(card);
+  });
+}
 
-      const params = new URLSearchParams();
+async function loadArtists() {
+  const artistSelect = document.getElementById("artistSelect");
 
-      if (genre) params.append("genre", genre);
-      if (year) params.append("year", year);
-      if (artist) params.append("artist", artist);
-      if (country) params.append("country", country);
+  try {
+    const response = await fetch(`${API_URL}/artists`);
+    const artists = await response.json();
 
-      const container = document.getElementById("tracksContainer");
+    artists.forEach(artist => {
+      const option = document.createElement("option");
+      option.value = artist;
+      option.textContent = artist;
+      artistSelect.appendChild(option);
+    });
+  } catch (error) {
+    console.error("Не удалось загрузить артистов:", error);
+  }
+}
 
-      if (!container) {
-        console.error("Не найден контейнер #tracksContainer");
-        return;
-      }
+async function loadCountries() {
+  const countrySelect = document.getElementById("countrySelect");
 
-      container.innerHTML = "<p>Загрузка...</p>";
+  try {
+    const response = await fetch(`${API_URL}/countries`);
+    const countries = await response.json();
 
-      try {
-        const response = await fetch(`${API_URL}?${params.toString()}`);
-
-        if (!response.ok) {
-          throw new Error("Ошибка API: " + response.status);
-        }
-
-        const tracks = await response.json();
-        renderTracks(tracks);
-
-      } catch (error) {
-        console.error(error);
-        container.innerHTML = "<p>Не удалось загрузить треки.</p>";
-      }
-    }
-
-    function renderTracks(tracks) {
-      const container = document.getElementById("tracksContainer");
-      container.innerHTML = "";
-
-      if (!tracks || !tracks.length) {
-        container.innerHTML = "<p>По выбранным фильтрам ничего не найдено.</p>";
-        return;
-      }
-
-      tracks.forEach(track => {
-        const card = document.createElement("div");
-        card.className = "release-card";
-        card.dataset.track = track.id;
-
-        card.innerHTML = `
-          <img src="${getCoverUrl(track)}" alt="Обложка ${track.title}" class="release-cover">
-          <div class="release-title">${track.title || "Без названия"}</div>
-          <div class="release-artist">${track.artist || "Неизвестный артист"}</div>
-          <div class="release-date">${track.year || ""}</div>
-        `;
-
-        card.addEventListener("click", function () {
-          window.location.href = `../pages/track-card.html?track=${track.id}`;
-        });
-
-        container.appendChild(card);
-      });
-    }
-
-    async function loadArtists() {
-      const artistSelect = document.getElementById("artistSelect");
-
-      if (!artistSelect) {
-        console.error("Не найден select #artistSelect");
-        return;
-      }
-
-      try {
-        const response = await fetch(`${API_URL}/artists`);
-
-        if (!response.ok) {
-          throw new Error("Ошибка API артистов: " + response.status);
-        }
-
-        const artists = await response.json();
-
-        artists.forEach(artist => {
-          const option = document.createElement("option");
-          option.value = artist;
-          option.textContent = artist;
-          artistSelect.appendChild(option);
-        });
-
-      } catch (error) {
-        console.error("Не удалось загрузить артистов:", error);
-      }
-    }
-
-    async function loadCountries() {
-      const countrySelect = document.getElementById("countrySelect");
-
-      if (!countrySelect) {
-        console.error("Не найден select #countrySelect");
-        return;
-      }
-
-      try {
-        const response = await fetch(`${API_URL}/countries`);
-
-        if (!response.ok) {
-          throw new Error("Ошибка API стран: " + response.status);
-        }
-
-        const countries = await response.json();
-
-        countries.forEach(country => {
-          const option = document.createElement("option");
-          option.value = country;
-          option.textContent = country;
-          countrySelect.appendChild(option);
-        });
-
-      } catch (error) {
-        console.error("Не удалось загрузить страны:", error);
-      }
-    }
-    </script>
+    countries.forEach(country => {
+      const option = document.createElement("option");
+      option.value = country;
+      option.textContent = country;
+      countrySelect.appendChild(option);
+    });
+  } catch (error) {
+    console.error("Не удалось загрузить страны:", error);
+  }
+}
+</script>
 
 </body>
 </html>

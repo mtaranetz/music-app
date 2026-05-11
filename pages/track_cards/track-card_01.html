@@ -4,112 +4,222 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>play it twice — трек</title>
-  <link rel="stylesheet" href="../../styles/track-card.css">
-  <link rel="stylesheet" href="../../styles/collection.css">
 
   <link rel="icon" type="image/png" href="../../images/logo.png">
+  <link rel="stylesheet" href="../../styles/track-card.css">
+  <link rel="stylesheet" href="../../styles/collection.css">
 </head>
 <body>
 
-    <div class="track-card">
-        <div class="left-column">
-            <div class="cover">
-            <img src="/images/semeinoe_photo_zoya_yachenko.jpg" alt="Обложка альбома">
-            </div>
-            
-            <div class="track-meta">
-            <h3 class="track-title">Семейное фото</h3>
-            <p class="track-artist">Зоя Ященко, Белая Гвардия · Венеция</p>
-            </div>
+  <div class="track-card">
+    <div class="left-column">
+      <div class="cover">
+        <img id="trackCover" src="../../images/logo.png" alt="Обложка трека">
+      </div>
 
-            <div class="player">
-            <span class="time">00:00</span>
-            <div class="progress"></div>
-            <span class="time">00:00</span>
-            </div>
-            
-            <button class="action">Работа с треком</button>
+      <div class="track-meta">
+        <h3 class="track-title" id="trackTitle">Загрузка...</h3>
+        <p class="track-artist" id="trackArtist"></p>
+        <p class="track-extra" id="trackExtra"></p>
+      </div>
+
+      <div class="player">
+        <span class="time">00:00</span>
+        <div class="progress">
+          <div class="progress-bar"></div>
         </div>
-    
-        <div class="right-column">
-            <div class="tabs">
-                <span class="tab active" data-tab="lyrics">текст</span>
-                <span class="separator">/</span>
-                <span class="tab" data-tab="queue">очередь</span>
-            </div>
+        <span class="time" id="trackDuration">00:00</span>
+      </div>
 
-            <!-- Контент для текста песни -->
-            <div class="tab-content active" id="lyrics-content">
-                
-            </div>
-
-            <!-- Контент для очереди -->
-            <div class="tab-content" id="queue-content">
-                
-        </div>
+      <button class="action" type="button">Работа с треком</button>
     </div>
-</div>
- <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const tabs = document.querySelectorAll('.tab');
-      const tabContents = document.querySelectorAll('.tab-content');
-      const apiUrl = 'http://music-app-server-117v.onrender.com/api/track/'; // URL для API на сервере
 
-      // Функция для загрузки контента с сервера
-      async function loadTabContent(tabId) {
-        try {
-          const response = await fetch(apiUrl + tabId);
-          const data = await response.json();
-          
-          // Если загружен контент для текста
-          if (tabId === 'lyrics') {
-            document.getElementById('lyrics-content').innerHTML = data.content;
-          }
+    <div class="right-column">
+      <div class="tabs">
+        <span class="tab active" data-tab="lyrics">текст</span>
+        <span class="separator">/</span>
+        <span class="tab" data-tab="queue">очередь</span>
+      </div>
 
-          // Если загружен контент для очереди
-          if (tabId === 'queue') {
-            const queueContent = data.content.map(track => {
-              return `
-                <article class="track">
-                  <div class="track__thumb">
-                    <img src="${track.image}" alt="">
-                  </div>
-                  <div class="track__info">
-                    <h3 class="track__title">${track.title}</h3>
-                    <div class="track__meta">${track.artist}</div>
-                  </div>
-                  <button class="track__btn">Работа с треком</button>
-                </article>
-              `;
-            }).join('');
-            document.getElementById('queue-content').innerHTML = queueContent;
-          }
-        } catch (error) {
-          console.error('Ошибка загрузки данных:', error);
-        }
+      <div class="tab-content active" id="lyrics-content">
+        <p>Загрузка текста...</p>
+      </div>
+
+      <div class="tab-content" id="queue-content">
+        <p>Загрузка очереди...</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = "https://music-app-server-117v.onrender.com/api";
+    const TRACKS_API = `${API_BASE}/tracks`;
+
+    document.addEventListener("DOMContentLoaded", () => {
+      initTrackCard();
+      initTabs();
+      loadTabContent("lyrics");
+    });
+
+    function getTrackId() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get("track") || "1";
+    }
+
+    function getImageUrl(image) {
+      if (!image) return "../../images/logo.png";
+
+      if (image.startsWith("http")) {
+        return image;
       }
 
-      // Сначала загружаем контент для активной вкладки
-      loadTabContent('lyrics'); // Текст по умолчанию
+      return `../../images/${image}`;
+    }
+
+    async function initTrackCard() {
+      const trackId = getTrackId();
+
+      try {
+        const response = await fetch(`${TRACKS_API}/${trackId}`);
+
+        if (!response.ok) {
+          throw new Error("Трек не найден");
+        }
+
+        const track = await response.json();
+        renderTrack(track);
+      } catch (error) {
+        console.error(error);
+        document.getElementById("trackTitle").textContent = "Трек не найден";
+        document.getElementById("trackArtist").textContent = "";
+      }
+    }
+
+    function renderTrack(track) {
+      document.getElementById("trackTitle").textContent =
+        track.title || "Без названия";
+
+      document.getElementById("trackArtist").textContent =
+        track.artist || "Неизвестный артист";
+
+      document.getElementById("trackExtra").textContent =
+        [track.genre, track.year, track.country].filter(Boolean).join(" · ");
+
+      document.getElementById("trackDuration").textContent =
+        track.duration || "00:00";
+
+      document.getElementById("trackCover").src =
+        getImageUrl(track.image);
+
+      document.getElementById("trackCover").alt =
+        `Обложка трека ${track.title || ""}`;
+    }
+
+    function initTabs() {
+      const tabs = document.querySelectorAll(".tab");
+      const tabContents = document.querySelectorAll(".tab-content");
 
       tabs.forEach(tab => {
-        tab.addEventListener('click', function() {
-          const tabId = this.getAttribute('data-tab');
+        tab.addEventListener("click", () => {
+          const tabId = tab.dataset.tab;
 
-          // Убираем активный класс у всех табов
-          tabs.forEach(t => t.classList.remove('active'));
-          // Добавляем активный класс текущему табу
-          this.classList.add('active');
+          tabs.forEach(item => item.classList.remove("active"));
+          tab.classList.add("active");
 
-          // Скрываем все контенты
-          tabContents.forEach(content => content.classList.remove('active'));
-          // Показываем соответствующий контент
-          document.getElementById(tabId + '-content').classList.add('active');
+          tabContents.forEach(content => content.classList.remove("active"));
+          document.getElementById(`${tabId}-content`).classList.add("active");
 
-          // Загружаем контент для выбранной вкладки
           loadTabContent(tabId);
         });
       });
-    });
+    }
+
+    async function loadTabContent(tabId) {
+      try {
+        if (tabId === "lyrics") {
+          await loadLyrics();
+        }
+
+        if (tabId === "queue") {
+          await loadQueue();
+        }
+      } catch (error) {
+        console.error("Ошибка загрузки вкладки:", error);
+      }
+    }
+
+    async function loadLyrics() {
+      const container = document.getElementById("lyrics-content");
+      container.innerHTML = "<p>Загрузка текста...</p>";
+
+      try {
+        const response = await fetch(`${TRACKS_API}/lyrics`);
+
+        if (!response.ok) {
+          throw new Error("Не удалось загрузить текст");
+        }
+
+        const data = await response.json();
+        container.innerHTML = data.content || "<p>Текст пока не добавлен.</p>";
+      } catch (error) {
+        console.error(error);
+        container.innerHTML = "<p>Не удалось загрузить текст.</p>";
+      }
+    }
+
+    async function loadQueue() {
+      const container = document.getElementById("queue-content");
+      container.innerHTML = "<p>Загрузка очереди...</p>";
+
+      try {
+        const response = await fetch(`${TRACKS_API}/queue`);
+
+        if (!response.ok) {
+          throw new Error("Не удалось загрузить очередь");
+        }
+
+        const data = await response.json();
+        const tracks = data.content || [];
+
+        if (!tracks.length) {
+          container.innerHTML = "<p>Очередь пуста.</p>";
+          return;
+        }
+
+        container.innerHTML = tracks.map(track => `
+          <article class="track" data-track="${track.id}">
+            <div class="track__thumb">
+              <img src="${getImageUrl(track.image)}" alt="Обложка ${track.title || ""}">
+            </div>
+
+            <div class="track__info">
+              <h3 class="track__title">${track.title || "Без названия"}</h3>
+              <div class="track__meta">${track.artist || "Неизвестный артист"}</div>
+            </div>
+
+            <button class="track__btn" type="button">Работа с треком</button>
+          </article>
+        `).join("");
+
+        document.querySelectorAll("#queue-content .track").forEach(card => {
+          card.addEventListener("click", e => {
+            if (e.target.closest(".track__btn")) {
+              e.stopPropagation();
+              console.log("Работа с треком");
+              return;
+            }
+
+            const trackId = card.dataset.track;
+            window.location.href = `track-card_01.html?track=${trackId}`;
+          });
+        });
+
+      } catch (error) {
+        console.error(error);
+        container.innerHTML = "<p>Не удалось загрузить очередь.</p>";
+      }
+    }
   </script>
+
 </body>
+</html>
