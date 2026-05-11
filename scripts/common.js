@@ -1,8 +1,18 @@
 const API_BASE = "https://music-app-server-117v.onrender.com/api";
 
+function isRootPage() {
+  return (
+    location.pathname === "/" ||
+    location.pathname.endsWith("/index.html")
+  );
+}
+
+function getPrefix() {
+  return isRootPage() ? "./" : "../";
+}
+
 function goToPage(page) {
-  const isRoot = location.pathname.endsWith("/index.html") || location.pathname === "/";
-  const prefix = isRoot ? "./" : "../";
+  const prefix = getPrefix();
 
   const routes = {
     "Главная": `${prefix}index.html`,
@@ -11,7 +21,9 @@ function goToPage(page) {
     "Добавить трек": `${prefix}pages/add_track.html`
   };
 
-  if (routes[page]) location.href = routes[page];
+  if (routes[page]) {
+    location.href = routes[page];
+  }
 }
 
 function initSidebar() {
@@ -28,12 +40,11 @@ function initMiniPlayer() {
 
   const actionButton = miniPlayer.querySelector(".action");
   const progress = miniPlayer.querySelector(".progress");
+  const progressBar = miniPlayer.querySelector(".progress-bar");
 
   miniPlayer.addEventListener("click", e => {
     if (!e.target.closest(".action") && !e.target.closest(".progress")) {
-      const isRoot = location.pathname.endsWith("/index.html") || location.pathname === "/";
-      const prefix = isRoot ? "./" : "../";
-      location.href = `${prefix}pages/track_cards/track-card_01.html?track=1`;
+      location.href = `${getPrefix()}pages/track_cards/track-card_01.html?track=1`;
     }
   });
 
@@ -44,13 +55,17 @@ function initMiniPlayer() {
     });
   }
 
-  if (progress) {
+  if (progress && progressBar) {
     progress.addEventListener("click", e => {
       e.stopPropagation();
-      const bar = progress.querySelector(".progress-bar");
+
       const rect = progress.getBoundingClientRect();
-      const ratio = Math.min(Math.max((e.clientX - rect.left) / rect.width, 0), 1);
-      if (bar) bar.style.width = `${ratio * 100}%`;
+      const ratio = Math.min(
+        Math.max((e.clientX - rect.left) / rect.width, 0),
+        1
+      );
+
+      progressBar.style.width = `${ratio * 100}%`;
     });
   }
 }
@@ -59,49 +74,83 @@ function initSearch() {
   const searchInput = document.getElementById("searchInput");
   const suggestions = document.getElementById("suggestions");
 
-  if (!searchInput || !suggestions) return;
+  if (!searchInput || !suggestions) {
+    console.warn("Поиск не найден на странице");
+    return;
+  }
 
   searchInput.addEventListener("input", async () => {
     const query = searchInput.value.trim();
 
     if (query.length < 3) {
+      suggestions.innerHTML = "";
       suggestions.style.display = "none";
       return;
     }
 
     try {
-      const response = await fetch(`${API_BASE}/search/search?query=${encodeURIComponent(query)}`);
+      const url = `${API_BASE}/search/search?query=${encodeURIComponent(query)}`;
+      console.log("Search request:", url);
+
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error(`Ошибка поиска: ${response.status}`);
+      }
+
       const data = await response.json();
+      console.log("Search response:", data);
 
       renderSuggestions(data.suggestions || []);
     } catch (error) {
-      console.error(error);
+      console.error("Ошибка при получении подсказок:", error);
+      suggestions.innerHTML = "";
       suggestions.style.display = "none";
     }
   });
 
-  function renderSuggestions(items) {
-    suggestions.innerHTML = "";
-
-    if (!items.length) {
+  document.addEventListener("click", e => {
+    if (!e.target.closest(".search")) {
       suggestions.style.display = "none";
-      return;
+    }
+  });
+}
+
+function renderSuggestions(items) {
+  const suggestions = document.getElementById("suggestions");
+  if (!suggestions) return;
+
+  suggestions.innerHTML = "";
+
+  if (!items.length) {
+    suggestions.style.display = "none";
+    return;
+  }
+
+  items.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "suggestion-item";
+
+    if (typeof item === "string") {
+      div.textContent = item;
+    } else {
+      div.textContent = `${item.title || "Без названия"} — ${item.artist || "Неизвестный артист"}`;
     }
 
-    items.forEach(item => {
-      const div = document.createElement("div");
-      div.className = "suggestion-item";
-      div.textContent = `${item.title} — ${item.artist}`;
+    div.addEventListener("click", () => {
+      if (typeof item === "string") {
+        searchInput.value = item;
+        suggestions.style.display = "none";
+        return;
+      }
 
-      div.addEventListener("click", () => {
-        location.href = item.url;
-      });
-
-      suggestions.appendChild(div);
+      location.href = `${getPrefix()}pages/track_cards/track-card_01.html?track=${item.id}`;
     });
 
-    suggestions.style.display = "block";
-  }
+    suggestions.appendChild(div);
+  });
+
+  suggestions.style.display = "block";
 }
 
 document.addEventListener("DOMContentLoaded", () => {

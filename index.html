@@ -158,154 +158,33 @@
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
-  const searchInput = document.getElementById('searchInput');
-  const suggestionsContainer = document.getElementById('suggestions');
+document.addEventListener('DOMContentLoaded', function() {
+  const filtersEl = document.querySelector('.filters');
+  if (!filtersEl) return;
 
-  // Функция для обработки ввода в поле поиска
-  searchInput.addEventListener('input', function () {
-    const query = searchInput.value.trim();
+  function updateLabel(select) {
+    const labelSpan = select.closest('.pill').querySelector('.btn-text');
+    const base = select.dataset.filter;
+    labelSpan.textContent = select.value ? `${base}: ${select.value}` : base;
+  }
 
-    if (query.length >= 3) { // Отправляем запрос только если длина запроса >= 3 символов
-      fetchSuggestions(query);
-    } else {
-      suggestionsContainer.style.display = 'none'; // Скрываем подсказки, если меньше 3 символов
-    }
+  filtersEl.addEventListener('change', e => {
+    const select = e.target.closest('.pill-select');
+    if (!select) return;
+
+    updateLabel(select);
+
+    filtersEl.dispatchEvent(new CustomEvent('filterchange', {
+      detail: {
+        filter: select.dataset.filter,
+        value: select.value || null
+      }
+    }));
   });
 
-  // Функция для отправки запроса на сервер и получения подсказок
-  function fetchSuggestions(query) {
-    fetch(`http://music-app-server-117v.onrender.com/api/search/search?query=${query}`)
-      .then(response => response.json())
-      .then(data => {
-        if (data.suggestions && data.suggestions.length > 0) {
-          renderSuggestions(data.suggestions);
-        } else {
-          suggestionsContainer.style.display = 'none'; // Скрываем, если нет подсказок
-        }
-      })
-      .catch(error => {
-        console.error('Ошибка при получении подсказок:', error);
-        suggestionsContainer.style.display = 'none'; // Скрываем, если ошибка
-      });
-  }
-
-  // Функция для отображения подсказок
-  function renderSuggestions(suggestions) {
-    suggestionsContainer.innerHTML = ''; // Очищаем предыдущие подсказки
-    suggestions.forEach(suggestion => {
-      const item = document.createElement('div');
-      item.classList.add('suggestion-item');
-      item.textContent = suggestion;
-      item.addEventListener('click', function () {
-        searchInput.value = suggestion; // Вставляем выбранную подсказку в поле поиска
-        suggestionsContainer.style.display = 'none'; // Скрываем подсказки
-        // Можно тут добавить логику для перехода по выбранной подсказке
-      });
-      suggestionsContainer.appendChild(item);
-    });
-    suggestionsContainer.style.display = 'block'; // Показываем подсказки
-  }
+  document.querySelectorAll('.pill-select').forEach(updateLabel);
 });
-  </script>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-
-      // === Фильтры на <select> ===
-    const filtersEl = document.querySelector('.filters');
-
-    function updateLabel(select) {
-      const labelSpan = select.closest('.pill').querySelector('.btn-text');
-      const base = select.dataset.filter; // всегда исходный заголовок
-      labelSpan.textContent = select.value ? `${base}: ${select.value}` : base;
-    }
-
-    filtersEl.addEventListener('change', (e) => {
-      const select = e.target.closest('.pill-select');
-      if (!select) return;
-      updateLabel(select);
-
-      // единое событие для внешней логики
-      filtersEl.dispatchEvent(new CustomEvent('filterchange', {
-        detail: { filter: select.dataset.filter, value: select.value || null }
-      }));
-    });
-
-    // при загрузке привести подписи в порядок
-    document.querySelectorAll('.pill-select').forEach(updateLabel);
-
-      const miniPlayer = document.getElementById('miniPlayer');
-      const newPage = document.getElementById('')
-
-      // клик для перемотки 
-      const progWrap = miniPlayer.querySelector('.progress');
-      const progBar  = miniPlayer.querySelector('.progress-bar');
-      const timeBox  = miniPlayer.querySelector('.time');
-      const timeCurNode = timeBox.firstChild; // текст до <small>
-
-      progWrap.addEventListener('click', (e) => {
-        const rect = progWrap.getBoundingClientRect();
-        const x = Math.min(Math.max(e.clientX - rect.left, 0), rect.width);
-        const ratio = rect.width ? x / rect.width : 0;
-
-        progBar.style.width = (ratio * 100) + '%';
-
-        const a = (typeof audio !== 'undefined') ? audio : window.audio;
-
-        if (a && isFinite(a.duration) && a.duration > 0) {
-          a.currentTime = ratio * a.duration;
-
-          if (timeCurNode && timeCurNode.nodeType === Node.TEXT_NODE) {
-            const mm = String(Math.floor(a.currentTime / 60)).padStart(2, '0');
-            const ss = String(Math.floor(a.currentTime % 60)).padStart(2, '0');
-            timeCurNode.textContent = `${mm}:${ss}`;
-          }
-        }
-      });
-
-      
-      // Обработчик клика на плеер
-      miniPlayer.addEventListener('click', function(e) {
-        // Проверяем, что клик не был на кнопке "Работа с треком"
-        if (!e.target.closest('.action') && !e.target.closest('.progress')) {
-          openTrackCard();
-        }
-      });
-      
-      // Обработчик клика на кнопку "Работа с треком"
-      const actionButton = miniPlayer.querySelector('.action');
-      actionButton.addEventListener('click', function(e) {
-        e.stopPropagation(); 
-        console.log('Работа с треком');
-      });
-      
-      function openTrackCard() {
-        window.location.href = './pages/track_cards/track-card_01.html';
-      }
-
-      const sidebarButtons = document.querySelectorAll('.sb-btn');
-      sidebarButtons.forEach(button => {
-        button.addEventListener('click', function() {
-          if (this.textContent === 'Главная') {
-            window.location.href = './index.html';
-          }
-          if (this.textContent === 'Новинки') {
-            window.location.href = './pages/new_albums.html';
-          }
-          if (this.textContent === 'Артисты') {
-            window.location.href = './pages/artists.html';
-          }
-          if (this.textContent === 'Добавить трек') {
-            window.location.href = './pages/add_track.html';
-          }
-        });
-      });
-    });
-      
-
-        
-  </script>
+</script>
 
 </body>
 </html>
