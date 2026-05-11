@@ -7,18 +7,28 @@ function isRootPage() {
   );
 }
 
-function getPrefix() {
-  return isRootPage() ? "./" : "../";
+function getBasePath() {
+  const path = location.pathname;
+
+  if (path.endsWith("/index.html") || path === "/") {
+    return "./";
+  }
+
+  if (path.includes("/pages/collections/") || path.includes("/pages/track_cards/")) {
+    return "../../";
+  }
+
+  return "../";
 }
 
 function goToPage(page) {
-  const prefix = getPrefix();
+  const base = getBasePath();
 
   const routes = {
-    "Главная": `${prefix}index.html`,
-    "Новинки": `${prefix}pages/new_albums.html`,
-    "Артисты": `${prefix}pages/artists.html`,
-    "Добавить трек": `${prefix}pages/add_track.html`
+    "Главная": `${base}index.html`,
+    "Новинки": `${base}pages/new_albums.html`,
+    "Артисты": `${base}pages/artists.html`,
+    "Добавить трек": `${base}pages/add_track.html`
   };
 
   if (routes[page]) {
@@ -44,7 +54,7 @@ function initMiniPlayer() {
 
   miniPlayer.addEventListener("click", e => {
     if (!e.target.closest(".action") && !e.target.closest(".progress")) {
-      location.href = `${getPrefix()}pages/track_cards/track-card_01.html?track=1`;
+      location.href = `${getBasePath()}pages/track_cards/track-card_01.html?track=1`;
     }
   });
 
@@ -144,7 +154,7 @@ function renderSuggestions(items) {
         return;
       }
 
-      location.href = `${getPrefix()}pages/track_cards/track-card_01.html?track=${item.id}`;
+      location.href = `${getBasePath()}pages/track_cards/track-card_01.html?track=${item.id}`;
     });
 
     suggestions.appendChild(div);

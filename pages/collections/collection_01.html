@@ -7,6 +7,7 @@
   <title>play it twice — сборник</title>
   <link rel="stylesheet" href="../../styles/styles.css">
   <link rel="stylesheet" href="../../styles/collection.css">
+  <script src="../../scripts/common.js"></script>
 </head>
 <body>
 
@@ -21,7 +22,10 @@
         <span class="brand-name">play it twice</span>
         <span class="brand-tag">музыкальный<br>сервис</span>
       </div>
-      <button class="search-btn" type="button">поиск по каталогу</button>
+      <div class="search">
+        <input type="text" id="searchInput" placeholder="Искать треки..." autocomplete="off">
+        <div id="suggestions" class="suggestions"></div>
+      </div>
     </header>
 
     <main class="main">
@@ -47,71 +51,7 @@
 
             <!-- Треки -->
             <div class="tracks" id="tracksList">
-                <article class="track">
-                    <div class="track__thumb">
-                    <img src="../../images/the_fame_monster.jpg" alt="">
-                    </div>
-                    <div class="track__info">
-                    <h3 class="track__title">Poker Face</h3>
-                    <div class="track__meta">Lady Gaga · The Fame Monster</div>
-                    </div>
-                    <button class="track__btn">Работа с треком</button>
-                </article>
-
-                <article class="track">
-                    <div class="track__thumb">
-                    <img src="../../images/a_na_more_belyy_pesok.jpg" alt="">
-                    </div>
-                    <div class="track__info">
-                    <h3 class="track__title">А на море белый песок</h3>
-                    <div class="track__meta">Жанна Фриске · А на море белый песок</div>
-                    </div>
-                    <button class="track__btn">Работа с треком</button>
-                </article>
-
-                <article class="track">
-                    <div class="track__thumb">
-                    <img src="../../images/the_fame_monster.jpg" alt="">
-                    </div>
-                    <div class="track__info">
-                    <h3 class="track__title">Just dance</h3>
-                    <div class="track__meta">Lady Gaga · The Fame Monster</div>
-                    </div>
-                    <button class="track__btn">Работа с треком</button>
-                </article>
-
-                <!-- <article class="track">
-                    <div class="track__thumb">
-                    <img src="../../images/prestuplenie.jpg" alt="">
-                    </div>
-                    <div class="track__info">
-                    <h3 class="track__title">Лето</h3>
-                    <div class="track__meta">Чи-Ли · Преступление</div>
-                    </div>
-                    <button class="track__btn">Работа с треком</button>
-                </article>
-
-                <article class="track">
-                    <div class="track__thumb">
-                    <img src="../../images/gde_ti.jpg" alt="">
-                    </div>
-                    <div class="track__info">
-                    <h3 class="track__title">Где ты</h3>
-                    <div class="track__meta">Инфинити feat. D.I.P. Project · ГДЕ ТЫ</div>
-                    </div>
-                    <button class="track__btn">Работа с треком</button>
-                </article>
-
-                <article class="track">
-                    <div class="track__thumb">
-                    <img src="../../images/tanc.jpg" alt="">
-                    </div>
-                    <div class="track__info">
-                    <h3 class="track__title">Веретено</h3>
-                    <div class="track__meta">Алиса · Танцевать</div>
-                    </div>
-                    <button class="track__btn">Работа с треком</button>
-                </article> -->
+               
             </div>
             <div id="scrollTrigger" style="height: 20px;"></div>
         </section>
@@ -137,82 +77,112 @@
       <button class="action" type="button">Работа с треком</button>
     </section>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const miniPlayer = document.getElementById('miniPlayer');
-  const tracksList = document.getElementById('tracksList');
-  const trigger = document.getElementById('scrollTrigger');
-  const PAGE_SIZE = 3;
-  let currentPage = 1;
-  let isLoading = false;
+    <script>
+const PLAYLISTS_API = `${API_BASE}/playlists`;
 
-  // Функция для загрузки данных с сервера
-  async function loadTracksData(page) {
-    if (isLoading) return;  // Если уже идет загрузка, ничего не делаем
-    
-    isLoading = true;
+document.addEventListener("DOMContentLoaded", () => {
+  loadPlaylist();
+});
 
-    try {
-      const response = await fetch(`http://music-app-server-117v.onrender.com/api/track/queue?page=${page}&pageSize=${PAGE_SIZE}`);
-      const data = await response.json();
-      
-      // Добавляем треки в список
-      data.content.forEach(track => {
-        const article = createTrackElement(track);
-        tracksList.appendChild(article);
-      });
+function getPlaylistId() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get("playlist") || "1";
+}
 
-      // Если нет больше треков, отключаем observer
-      if (data.content.length < PAGE_SIZE) {
-        observer.disconnect();
-      }
-    } catch (error) {
-      console.error('Ошибка загрузки:', error);
-    }
+function getImageUrl(image) {
+  if (!image) return "../../images/logo.png";
 
-    isLoading = false;
+  if (image.includes("localhost")) {
+    return `../../images/${image.split("/").pop()}`;
   }
 
-  function createTrackElement(track) {
-    const article = document.createElement('article');
-    article.className = 'track';
+  if (image.startsWith("https://")) {
+    return image;
+  }
+
+  if (image.startsWith("http://")) {
+    return `../../images/${image.split("/").pop()}`;
+  }
+
+  return `../../images/${image}`;
+}
+
+async function loadPlaylist() {
+  const playlistId = getPlaylistId();
+  const tracksList = document.getElementById("tracksList");
+
+  tracksList.innerHTML = "<p>Загрузка сборника...</p>";
+
+  try {
+    const response = await fetch(`${PLAYLISTS_API}/${playlistId}`);
+
+    if (!response.ok) {
+      throw new Error(`Ошибка загрузки плейлиста: ${response.status}`);
+    }
+
+    const playlist = await response.json();
+
+    renderPlaylistInfo(playlist);
+    renderTracks(playlist.tracks || []);
+  } catch (error) {
+    console.error(error);
+    tracksList.innerHTML = "<p>Не удалось загрузить сборник.</p>";
+  }
+}
+
+function renderPlaylistInfo(playlist) {
+  const title = document.querySelector(".hero__title");
+  const desc = document.querySelector(".hero__desc");
+  const cover = document.querySelector(".hero__cover img");
+
+  if (title) title.textContent = playlist.title || "Сборник";
+  if (desc) desc.textContent = playlist.description || "";
+  if (cover) {
+    cover.src = getImageUrl(playlist.image);
+    cover.alt = playlist.title || "Обложка сборника";
+  }
+}
+
+function renderTracks(tracks) {
+  const tracksList = document.getElementById("tracksList");
+  tracksList.innerHTML = "";
+
+  if (!tracks.length) {
+    tracksList.innerHTML = "<p>В сборнике пока нет треков.</p>";
+    return;
+  }
+
+  tracks.forEach(track => {
+    const article = document.createElement("article");
+    article.className = "track";
+    article.dataset.track = track.id;
 
     article.innerHTML = `
       <div class="track__thumb">
-        <img src="${track.image}" alt="${track.title}">
+        <img src="${getImageUrl(track.image)}" alt="Обложка ${track.title || ""}">
       </div>
+
       <div class="track__info">
-        <h3 class="track__title">${track.title}</h3>
-        <div class="track__meta">${track.artist}</div>
+        <h3 class="track__title">${track.title || "Без названия"}</h3>
+        <div class="track__meta">${track.artist || "Неизвестный артист"}</div>
       </div>
+
       <button class="track__btn" type="button">Работа с треком</button>
     `;
-    
-    return article;
-  }
 
-  // Логика для подгрузки треков по скроллу с небольшой задержкой
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        // Включаем задержку перед подгрузкой данных
-        setTimeout(() => {
-          currentPage++; // Увеличиваем страницу
-          loadTracksData(currentPage); // Загружаем данные для следующей страницы
-        }, 500); // Задержка 500 миллисекунд
+    article.addEventListener("click", e => {
+      if (e.target.closest(".track__btn")) {
+        e.stopPropagation();
+        console.log("Работа с треком");
+        return;
       }
+
+      window.location.href = `../track_cards/track-card_01.html?track=${track.id}`;
     });
-  }, {
-    root: null,
-    rootMargin: '100px 0px',  // 100px сверху и снизу от видимой области
-    threshold: 0.5  // Срабатывает, когда 50% элемента видимо
+
+    tracksList.appendChild(article);
   });
-
-  observer.observe(trigger);
-
-  // Загружаем первые треки при старте
-  loadTracksData(currentPage);
-});
+}
 </script>
 
 </body>

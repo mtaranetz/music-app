@@ -1,4 +1,5 @@
-﻿namespace CatalogApp.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+namespace CatalogApp.Models
 {
     public class Playlist
     {
@@ -9,6 +10,7 @@
         public string? Mood { get; set; }
         public string? Image { get; set; }
 
+        [Column("created_at")]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         public List<PlaylistTrack> PlaylistTracks { get; set; } = new();

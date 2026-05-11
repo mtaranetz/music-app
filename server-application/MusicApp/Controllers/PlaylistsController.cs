@@ -3,6 +3,7 @@ using CatalogApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace CatalogApp.Controllers
 {
     [Route("api/[controller]")]

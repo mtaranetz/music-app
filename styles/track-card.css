@@ -144,3 +144,9 @@ body {
   min-height: 200px;
   padding-right: 20px;
 }
+
+#lyrics-content {
+  white-space: pre-line;
+  line-height: 1.7;
+  word-break: break-word;
+}
